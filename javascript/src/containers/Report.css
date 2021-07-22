@@ -1,0 +1,7 @@
+.MuiOutlinedInput-root {
+  height: "55px";
+}
+
+.MuiMenuItem-root:focus {
+  background-color: lightblue;
+}

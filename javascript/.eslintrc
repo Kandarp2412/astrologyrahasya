@@ -1,0 +1,67 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false
+  },
+  "extends": "eslint:recommended",
+  // "extends": [
+  //   "airbnb"
+  // ],
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "quotes": [
+      "warn",
+      "double"
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 180
+      }
+    ],
+    "class-methods-use-this": "off",
+    "comma-dangle": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    //"max-len": "error",
+    // "no-console": "off",
+    "no-param-reassign": "error",
+    "no-plusplus": "off",
+    "no-return-assign": "error",
+    //"no-underscore-dangle": "error",
+    "no-unused-vars": "warn",
+    // "no-trregular-whitespace":"warn",
+    "object-curly-newline": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "no-console": 0,
+    "new-cap": 0,
+    "strict": 0,
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "eol-last": 0,
+    //"quotes": [2, "single"],
+    "jsx-quotes": 1,
+    "react/jsx-no-undef": 1,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/jsx-max-props-per-line": [
+      1,
+      {
+        "when": "always"
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off"
+  }
+}
