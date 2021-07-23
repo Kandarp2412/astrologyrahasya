@@ -117,7 +117,7 @@ const Dashboard = () => {
   const handleDate = (e) => {
     console.log(finalProgressionDate);
     axios
-      .post("http://localhost:9002/api/getprogressionChart", {
+      .post("https://rahasyavedic.herokuapp.com/api/getprogressionChart", {
         dateString: "2021-06-25",
         timeString: "13:17:17",
         lat: 54.567,
@@ -129,7 +129,7 @@ const Dashboard = () => {
         setProgressionChart(result.data.charts);
       });
     axios
-      .post("http://localhost:9002/api/gettransitChart", {
+      .post("https://rahasyavedic.herokuapp.com/api/gettransitChart", {
         dateString: "2021-06-25",
         timeString: "13:17:17",
         lat: 54.567,
@@ -294,8 +294,9 @@ const Dashboard = () => {
                   style={{
                     alignItems: "center",
                     display: "flex",
+                    width: "400px",
                     // marginLeft: "20px",
-                    // justifyContent: "space-between",
+                    justifyContent: "space-between",
                   }}
                 >
                   <div style={{ textAlign: "justify", marginTop: "17px" }}>
@@ -310,8 +311,8 @@ const Dashboard = () => {
                     style={{
                       height: "30px",
                       width: "30px",
-                      marginLeft: "40px",
-                      marginRight: "10px",
+                      // marginLeft: "40px",
+                      // marginRight: "10px",
                     }}
                     onClick={(e) => handleMinus(e)}
                   >
@@ -340,7 +341,7 @@ const Dashboard = () => {
                         width: "100px",
                         height: "30px",
                         fontSize: "12px",
-                        marginRight: "10px",
+                        // marginRight: "10px",
                       }}
                     />
                     <datalist id="browsers" style={{ width: "50px" }}>

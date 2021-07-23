@@ -106,7 +106,7 @@ const BirthDetailsForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:9002/api/getBirthChart", {
+      .post("https://rahasyavedic.herokuapp.com/api/getBirthChart", {
         dateString: "2021-04-24",
         timeString: "13:49:32",
         lat: "17.3667",

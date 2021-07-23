@@ -122,51 +122,54 @@ function BirthChart(props) {
                 </div> */}
                 {/* <div> */}
                 <div>
-                  <Toggle
-                    id="cheese-status"
-                    // defaultChecked={this.state.cheeseIsReady}
-                    onClick={(e) => handleToggle(e)}
+                  <input
+                    list="secondchart"
+                    // onClick={(e) => handleCharts(e)}
+                    style={{
+                      // display: "flex",
+                      // marginLeft: "15px",
+                      fontSize: "14px",
+                      height: "30px",
+                      marginTop: "25px",
+                      width: "2vw",
+                      minWidth: "18rem",
+                    }}
+                    defaultValue="d1Chart"
                   />
+                  <datalist id="secondchart">
+                    <option>Birth Chart</option>
+                    <option>Sun Chart</option>
+                    <option>Moon Chart</option>
+                    <option>Chalit Chart</option>
+                    <option>Hora Chart</option>
+                    <option>Dreshkan Chart</option>
+                    <option>Chathurthamasha Chart</option>
+                    <option>Panchmansha Chart</option>
+                    <option>Saptamansha Chart</option>
+                    <option>Ashtamansha Chart</option>
+                    <option>Navamansha Chart</option>
+                    <option>Dashamansha Chart</option>
+                    <option>Dwadashamsha Chart</option>
+                    <option>Shodashamsha Chart</option>
+                    <option>Vishmansha Chart</option>
+                    <option>Chaturvimshamsha Chart</option>
+                    <option>Bhamsha</option>
+                    <option>Trishamansha Chart</option>
+                    <option>Khavedamansha Chart</option>
+                    <option>Akshvedamsha Chart</option>
+                    <option>Shashtymasha Chart</option>
+                  </datalist>
                   {/* <label htmlFor="cheese-status" style={{ marginLeft: "5px" }}>
                     Hide Details
                   </label> */}
                 </div>
-                <input
-                  list="secondchart"
-                  // onClick={(e) => handleCharts(e)}
-                  style={{
-                    // marginLeft: "15px",
-                    fontSize: "14px",
-                    height: "30px",
-                    marginTop: "25px",
-                    width: "2vw",
-                    minWidth: "18rem",
-                  }}
-                  defaultValue="d1Chart"
+                <Toggle
+                  id="cheese-status"
+                  // style={{ marginTop: "50px" }}
+                  // defaultChecked={this.state.cheeseIsReady}
+                  onClick={(e) => handleToggle(e)}
                 />
-                <datalist id="secondchart">
-                  <option>Birth Chart</option>
-                  <option>Sun Chart</option>
-                  <option>Moon Chart</option>
-                  <option>Chalit Chart</option>
-                  <option>Hora Chart</option>
-                  <option>Dreshkan Chart</option>
-                  <option>Chathurthamasha Chart</option>
-                  <option>Panchmansha Chart</option>
-                  <option>Saptamansha Chart</option>
-                  <option>Ashtamansha Chart</option>
-                  <option>Navamansha Chart</option>
-                  <option>Dashamansha Chart</option>
-                  <option>Dwadashamsha Chart</option>
-                  <option>Shodashamsha Chart</option>
-                  <option>Vishmansha Chart</option>
-                  <option>Chaturvimshamsha Chart</option>
-                  <option>Bhamsha</option>
-                  <option>Trishamansha Chart</option>
-                  <option>Khavedamansha Chart</option>
-                  <option>Akshvedamsha Chart</option>
-                  <option>Shashtymasha Chart</option>
-                </datalist>
+
                 {/* </div> */}
               </div>
               <Divider

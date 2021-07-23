@@ -31,7 +31,12 @@ const CardSummary = ({ title, rate, linkText, to, color, children }) => {
   return (
     <Card
       className="mb-3 overflow-hidden"
-      style={{ minWidth: "12rem", width: "max-content", border: "none" }}
+      style={{
+        minWidth: "12rem",
+        width: "max-content",
+        border: "none",
+        backgroundColor: "transparent",
+      }}
     >
       {/* <Background image={getImage(color)} className='bg-card' /> */}
       <CardBody className="position-relative">

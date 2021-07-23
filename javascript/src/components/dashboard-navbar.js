@@ -218,7 +218,7 @@ export const DashboardNavbar = () => {
             }}
           >
             <TranslateOutlinedIcon
-              style={{ color: darkMode ? "blue" : "black", cursor: "pointer" }}
+              style={{ color: darkMode ? "blue" : "gray", cursor: "pointer" }}
               onClick={handleLanguage}
               currentOrganization={currentOrganization}
               organizations={organizations}
@@ -287,13 +287,13 @@ export const DashboardNavbar = () => {
                 md: "inline-flex",
                 xs: "none",
               },
-              color: darkMode ? "white" : "black",
+              color: darkMode ? "white" : "gray",
             }}
           >
             {darkMode ? <SunIcon /> : <MoonIcon />}
           </IconButton>
           <HelpOutlineOutlinedIcon
-            style={{ color: darkMode ? "white" : "black", marginRight: "10px" }}
+            style={{ color: darkMode ? "white" : "gray", marginRight: "10px" }}
             sx={{
               // color: "primary.contrastText",
               display: {
@@ -310,13 +310,13 @@ export const DashboardNavbar = () => {
                 md: "inline-flex",
                 xs: "inline-flex",
               },
-              color: darkMode ? "white" : "black",
+              color: darkMode ? "white" : "gray",
               marginRight: "10px",
             }}
           />
 
           <AppsOutlinedIcon
-            style={{ color: darkMode ? "white" : "black", marginRight: "10px" }}
+            style={{ color: darkMode ? "white" : "gray", marginRight: "10px" }}
             sx={{
               // color: "primary.contrastText",
               display: {
@@ -336,6 +336,7 @@ export const DashboardNavbar = () => {
             organizations={organizations}
           />
         </Toolbar>
+        <Divider style={{ borderColor: "black" }} />
       </AppBar>
     </div>
   );

@@ -38,6 +38,7 @@
 }
 
 .react-toggle-track {
+  margin-top: 35px;
   width: 50px;
   height: 24px;
   padding: 0;
@@ -81,6 +82,7 @@
   -webkit-transition: opacity 0.25s ease;
   -moz-transition: opacity 0.25s ease;
   transition: opacity 0.25s ease;
+  margin-bottom: 14px;
 }
 
 .react-toggle-track-x {
@@ -89,7 +91,7 @@
   height: 10px;
   top: -1px;
   /* bottom: 0px; */
-  margin-top: auto;
+  margin-top: 35px;
   margin-bottom: auto;
   line-height: 0;
   right: 10px;
@@ -113,6 +115,7 @@
   border: 1px solid #4d4d4d;
   border-radius: 50%;
   background-color: #fafafa;
+  margin-top: 35px;
 
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
