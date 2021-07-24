@@ -26,12 +26,7 @@ export function LanguageProvider(props) {
     },
   };
 
-  return (
-    <LanguageContext.Provider value={provider}>
-      {children}
-      {/* {console.log(children)} */}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={provider}>{children}</LanguageContext.Provider>;
 }
 
 LanguageProvider.propTypes = {

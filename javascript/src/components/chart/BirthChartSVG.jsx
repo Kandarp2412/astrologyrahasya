@@ -23,7 +23,7 @@ const DetailMapper = (props) => {
       {detailArray.map(([key, obj], index) => {
         return (
           <text
-            style={{ fill: "black" }}
+            style={{ fill: "black", fontSize: "18px" }}
             key={obj.text}
             id="XMLID_77_"
             transform={`translate(${x + 30} ${y + index * 14 - 14})`}
@@ -150,7 +150,13 @@ function BirthChartSVG(props) {
           <text id="XMLID_79_" x={190.125 + xOffset} y={13.52 + yOffset} className="st5 st6">
             {/* {data[1]?.moonPos && `Mo(${data[1]?.moonPos})`} */}
           </text>
-          <DetailMapper signNumber={1} x={153} y={50.0} detail={data[1]} />
+          <DetailMapper
+            // style={{ fontSize: "20px" }}
+            signNumber={1}
+            x={153}
+            y={50.0}
+            detail={data[1]}
+          />
           <text id="XMLID_11_" x={127.333 + xOffset} y={13.52 + yOffset} className="st5 st6">
             {/* As({data[1]?.asc}) */}
           </text>

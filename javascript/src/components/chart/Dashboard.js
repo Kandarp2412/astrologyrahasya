@@ -294,7 +294,7 @@ const Dashboard = () => {
                   style={{
                     alignItems: "center",
                     display: "flex",
-                    width: "400px",
+                    width: "353px",
                     // marginLeft: "20px",
                     justifyContent: "space-between",
                   }}
@@ -309,10 +309,12 @@ const Dashboard = () => {
                   {/* <div> */}
                   <Button
                     style={{
-                      height: "30px",
-                      width: "30px",
-                      // marginLeft: "40px",
-                      // marginRight: "10px",
+                      // height: "30px",
+                      // width: "30px",
+                      backgroundColor: "transparent",
+                      color: "black",
+                      border: "none",
+                      fontSize: "25px",
                     }}
                     onClick={(e) => handleMinus(e)}
                   >
@@ -365,7 +367,17 @@ const Dashboard = () => {
                   </Select> */}
                   </div>
 
-                  <Button style={{ height: "30px", width: "30px" }} onClick={(e) => handlePlus(e)}>
+                  <Button
+                    style={{
+                      // height: "30px",
+                      // width: "30px",
+                      backgroundColor: "transparent",
+                      color: "black",
+                      border: "none",
+                      fontSize: "23px",
+                    }}
+                    onClick={(e) => handlePlus(e)}
+                  >
                     +
                   </Button>
                   {/* </div> */}
@@ -376,7 +388,7 @@ const Dashboard = () => {
                     // marginBottom: "10px",
                     // marginTop: "0px",
                     // marginLeft: "10px",
-                    width: "25vw",
+                    width: "22vw",
                     minWidth: "18rem",
                     // width: "450px",
                   }}
@@ -440,7 +452,7 @@ const Dashboard = () => {
                     marginBottom: "10px",
                     // width: "450px",
                     // marginLeft: "20px",
-                    width: "25vw",
+                    width: "22vw",
                     minWidth: "18rem",
                   }}
                 />

@@ -150,8 +150,8 @@ function ProgressionChart() {
                 /> */}
               <div
                 style={{
-                  height: "25vw",
-                  width: "25vw",
+                  height: "22vw",
+                  width: "22vw",
                   minWidth: "18rem",
                   minHeight: "18rem",
                   // marginBottom: "30px",
@@ -169,7 +169,7 @@ function ProgressionChart() {
                 }}
               >
                 {data && progressionChart ? (
-                  chartType === "North Indian style" ? (
+                  chartType === "North Indian" ? (
                     <NorthIndianStyle
                       data={progressionChart?.["d1Chart"]}
                       selectedCharts={selectedCharts}

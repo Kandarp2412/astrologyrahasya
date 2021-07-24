@@ -132,7 +132,7 @@ function BirthChart(props) {
                       height: "30px",
                       marginTop: "25px",
                       width: "2vw",
-                      minWidth: "18rem",
+                      minWidth: "15rem",
                     }}
                     defaultValue="d1Chart"
                   />
@@ -178,7 +178,7 @@ function BirthChart(props) {
                   marginBottom: "10px",
                   // marginTop: "15px",
                   textAlign: "justify",
-                  width: "25vw",
+                  width: "22vw",
                   minWidth: "18rem",
                   // marginRight: "20px",
                   // width: "450px",
@@ -187,8 +187,8 @@ function BirthChart(props) {
               />
               <div
                 style={{
-                  height: "25vw",
-                  width: "25vw",
+                  height: "22vw",
+                  width: "22vw",
                   minWidth: "18rem",
                   minHeight: "18rem",
                   // marginBottom: "30px",

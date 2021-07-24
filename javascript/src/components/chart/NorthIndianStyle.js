@@ -420,10 +420,10 @@ const Boxes = () => {
       <path id="XMLID_2_" d="M0 508.5L500 -8" />
       <path id="XMLID_6_" d="M506.5 515L-10.5 -20" />
       <path id="XMLID_8_" d="M499.5 252L246.5 -10" />
-      <path id="XMLID_9_" d="M246.5 511L-16.5 238" />
+      <path id="XMLID_9_" d="M263.5 511L-16.5 238" />
       {/* <path id='XMLID_7_' d='M371.5 511L371.5 -10' /> */}
       <path id="XMLID_4_" d="M0 252.5L248-10.5" />
-      <path id="XMLID_10_" d="M244 510.5L503 250.5" />
+      <path id="XMLID_10_" d="M243 510.5L503 250.5" />
       {/* <path id='XMLID_5_' d='M0 378.5L500 378.5' /> */}
     </g>
   );

@@ -282,107 +282,271 @@ const BirthDetailsForm = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-        <Grid item>
-          <InputLabel htmlFor="name">Search saved profile</InputLabel>
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            size="small"
-            style={{ width: 150 }}
-            name="name"
-            inputRef={namesVal}
-          />
-        </Grid>
-
-        <Grid item style={{ marginLeft: "20px" }}>
-          <InputLabel htmlFor="name">Date of birth</InputLabel>
-          <TextField
-            id="date"
-            variant="outlined"
-            style={{ width: 150 }}
-            size="small"
-            type="date"
-            inputRef={birthDateVal}
-          />
-        </Grid>
-
-        <Grid item style={{ marginLeft: "20px" }}>
-          <InputLabel htmlFor="name">Birth time</InputLabel>
-          <LocalizationProvider className="timepicker" dateAdapter={AdapterDateFns}>
-            <TimePicker
-              ampm={false}
-              openTo="hours"
-              views={["hours", "minutes", "seconds"]}
-              inputFormat="HH:mm:ss"
-              mask="__:__:__"
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
-              }}
-              style={{ width: 150, height: 8 }}
-              selected={value}
-              inputRef={birthTimeVal}
-              renderInput={(params) => <TextField {...params} inputRef={birthTimeVal} />}
+      <div>
+        <Grid container spacing={1} sx={{ display: { xs: "flex", md: "none" } }}>
+          <Grid item md={3} xs={12}>
+            <InputLabel htmlFor="name">Search saved profile</InputLabel>
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              size="small"
+              style={{ width: 270 }}
+              name="name"
+              // sx={{
+              //   display: {
+              //     xs: "flex",
+              //     md: "flex",
+              //   },
+              // }}
+              //  inputRef={namesVal}
             />
-          </LocalizationProvider>
+          </Grid>
+          <Grid item md={2} xs={12}>
+            <InputLabel htmlFor="name">Date of birth</InputLabel>
+            <TextField
+              id="date"
+              variant="outlined"
+              style={{ width: 270 }}
+              size="small"
+              type="date"
+              // sx={{
+              //   display: {
+              //     xs: "flex",
+              //     md: {display:"flex",flexDirection:"column"},
+              //   },
+              // }}
+              // inputRef={birthDateVal}
+            />
+          </Grid>
+          <Grid item md={1} xs={12}>
+            <InputLabel htmlFor="name">Birth time</InputLabel>
+            <LocalizationProvider className="timepicker" dateAdapter={AdapterDateFns}>
+              <TimePicker
+                ampm={false}
+                openTo="hours"
+                views={["hours", "minutes", "seconds"]}
+                inputFormat="HH:mm:ss"
+                mask="__:__:__"
+                value={value}
+                onChange={(newValue) => {
+                  setValue(newValue);
+                }}
+                style={{ width: 325, height: 8 }}
+                selected={value}
+                inputRef={birthTimeVal}
+                renderInput={(params) => <TextField {...params} inputRef={birthTimeVal} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item md={1} xs={12}>
+            <InputLabel htmlFor="locationAddress">
+              Birth Place{" "}
+              <a href="#" onClick={(e) => setAdvancedOption(!advancedOption)}>
+                +Advanced Options
+              </a>
+            </InputLabel>
+            <Autocomplete
+              id="combo-box-demo"
+              options={result}
+              onChange={handleTextFeild} // prints the selected value
+              getOptionLabel={(options) =>
+                `${options.place} ,${options.state !== " " ? options.state : " "},${
+                  options.country_name
+                }`
+              }
+              style={{ width: 270 }}
+              onInputChange={handleBirthPlace}
+              name="location"
+              renderInput={(params) => (
+                <TextField {...params} inputRef={locationVal} variant="outlined" size="small" />
+              )}
+            />
+          </Grid>
+
+          <Grid item md={1} xs={12}>
+            <InputLabel htmlFor="name">select chart</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              open={open}
+              onClose={handleClose}
+              onOpen={handleOpen}
+              value={chartType}
+              defaultValue="South Indian"
+              onChange={handleChange}
+              style={{ height: "40px", width: 270 }}
+            >
+              <MenuItem value="North Indian">North Indian</MenuItem>
+              <MenuItem value="South Indian">South Indian</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item md={1} xs={12}>
+            <InputLabel htmlFor="name">Ayanamsha</InputLabel>
+            <Select
+              value={selectedAyanamsha}
+              onChange={(e) => setSelectedAyanamsha(parseInt(e.target.value))}
+              style={{ width: 270 }}
+            >
+              {ayanamshas &&
+                Object.values(ayanamshas).map((value) => {
+                  return (
+                    <option key={value.id} value={value.id}>
+                      {value.name}
+                    </option>
+                  );
+                })}
+            </Select>
+          </Grid>
+          {/* <Grid item md={1} xs={12}>
+            <InputLabel htmlFor="name">Date of birth</InputLabel>
+            <TextField
+              id="date"
+              variant="outlined"
+              style={{ width: 185 }}
+              size="small"
+              type="date"
+              sx={{
+                display: {
+                  xs: "flex",
+                  md: {display:"flex",flexDirection:"column"},
+                },
+              }}
+              inputRef={birthDateVal}
+            />
+          </Grid> */}
+
+          <Grid item md={1} xs={12}>
+            <InputLabel></InputLabel>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ height: "40px", marginLeft: "20px", marginTop: "20px" }}
+            >
+              Submit
+            </Button>
+          </Grid>
         </Grid>
 
-        <Grid item style={{ marginLeft: "20px" }}>
-          <InputLabel htmlFor="locationAddress">
-            Birth Place{" "}
-            <a href="#" onClick={(e) => setAdvancedOption(!advancedOption)}>
-              +Advanced Options
-            </a>
-          </InputLabel>
-          <Autocomplete
-            id="combo-box-demo"
-            options={result}
-            onChange={handleTextFeild} // prints the selected value
-            getOptionLabel={(options) =>
-              `${options.place} ,${options.state !== " " ? options.state : " "},${
-                options.country_name
-              }`
-            }
-            style={{ width: 325 }}
-            onInputChange={handleBirthPlace}
-            name="location"
-            renderInput={(params) => (
-              <TextField {...params} inputRef={locationVal} variant="outlined" size="small" />
-            )}
-          />
-        </Grid>
+        {/* for desktop view */}
 
-        <Grid item style={{ marginLeft: "20px" }}>
-          <InputLabel htmlFor="name">select chart</InputLabel>
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            open={open}
-            onClose={handleClose}
-            onOpen={handleOpen}
-            value={chartType}
-            defaultValue="South Indian"
-            onChange={handleChange}
-            style={{ height: "40px", width: 150 }}
-          >
-            <MenuItem value="North Indian">North Indian</MenuItem>
-            <MenuItem value="South Indian">South Indian</MenuItem>
-          </Select>
-        </Grid>
+        <Grid sx={{ display: { xs: "none", md: "flex" } }}>
+          <Grid item>
+            <InputLabel htmlFor="name">Search saved profile</InputLabel>
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              size="small"
+              style={{ width: 150 }}
+              name="name"
+              inputRef={namesVal}
+            />
+          </Grid>
 
-        <Grid item>
-          <InputLabel></InputLabel>
-          <Button
-            onClick={(event) => handleSubmit(event)}
-            variant="contained"
-            color="primary"
-            style={{ height: "40px", marginLeft: "20px", marginTop: "20px" }}
-          >
-            Submit
-          </Button>
-        </Grid>
+          <Grid item style={{ marginLeft: "10px" }}>
+            <InputLabel htmlFor="name">Date of birth</InputLabel>
+            <TextField
+              id="date"
+              variant="outlined"
+              style={{ width: 185 }}
+              size="small"
+              type="date"
+              inputRef={birthDateVal}
+            />
+          </Grid>
 
+          <Grid item style={{ marginLeft: "10px" }}>
+            <InputLabel htmlFor="name">Birth time</InputLabel>
+            <LocalizationProvider className="timepicker" dateAdapter={AdapterDateFns}>
+              <TimePicker
+                ampm={false}
+                openTo="hours"
+                views={["hours", "minutes", "seconds"]}
+                inputFormat="HH:mm:ss"
+                mask="__:__:__"
+                value={value}
+                onChange={(newValue) => {
+                  setValue(newValue);
+                }}
+                style={{ width: 185, height: 8 }}
+                selected={value}
+                inputRef={birthTimeVal}
+                renderInput={(params) => <TextField {...params} inputRef={birthTimeVal} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+
+          <Grid item style={{ marginLeft: "10px" }}>
+            <InputLabel htmlFor="locationAddress">
+              Birth Place{" "}
+              <a href="#" onClick={(e) => setAdvancedOption(!advancedOption)}>
+                +Advanced Options
+              </a>
+            </InputLabel>
+            <Autocomplete
+              id="combo-box-demo"
+              options={result}
+              onChange={handleTextFeild} // prints the selected value
+              getOptionLabel={(options) =>
+                `${options.place} ,${options.state !== " " ? options.state : " "},${
+                  options.country_name
+                }`
+              }
+              style={{ width: 280 }}
+              onInputChange={handleBirthPlace}
+              name="location"
+              renderInput={(params) => (
+                <TextField {...params} inputRef={locationVal} variant="outlined" size="small" />
+              )}
+            />
+          </Grid>
+
+          <Grid item style={{ marginLeft: "10px" }}>
+            <InputLabel htmlFor="name">select chart</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              open={open}
+              onClose={handleClose}
+              onOpen={handleOpen}
+              value={chartType}
+              defaultValue="South Indian"
+              onChange={handleChange}
+              style={{ height: "40px", width: 150 }}
+            >
+              <MenuItem value="North Indian">North Indian</MenuItem>
+              <MenuItem value="South Indian">South Indian</MenuItem>
+            </Select>
+          </Grid>
+
+          <Grid item style={{ marginLeft: "10px" }}>
+            <InputLabel htmlFor="name">Ayanamsha</InputLabel>
+            <Select
+              value={selectedAyanamsha}
+              onChange={(e) => setSelectedAyanamsha(parseInt(e.target.value))}
+            >
+              {ayanamshas &&
+                Object.values(ayanamshas).map((value) => {
+                  return (
+                    <option key={value.id} value={value.id}>
+                      {value.name}
+                    </option>
+                  );
+                })}
+            </Select>
+          </Grid>
+
+          <Grid item>
+            <InputLabel></InputLabel>
+            <Button
+              onClick={(event) => handleSubmit(event)}
+              variant="contained"
+              color="primary"
+              style={{ height: "40px", marginLeft: "20px", marginTop: "20px" }}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
         {advancedOption === true ? (
           <div style={{ display: "flex", marginTop: "100px", marginLeft: "-855px" }}>
             <Grid item>

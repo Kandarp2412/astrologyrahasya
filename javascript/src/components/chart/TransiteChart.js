@@ -121,8 +121,8 @@ function TransiteChart(props) {
                 /> */}
               <div
                 style={{
-                  height: "25vw",
-                  width: "25vw",
+                  height: "22vw",
+                  width: "22vw",
                   minWidth: "18rem",
                   minHeight: "18rem",
                   // marginBottom: "30px",
