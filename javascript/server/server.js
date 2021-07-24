@@ -61,7 +61,7 @@ const {
 } = require("./models/index");
 
 const URI = process.env.MONGO_URI;
-mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+mongoose.connect("mongodb+srv://Admin:Admin@cluster0.c7mzg.mongodb.net/Astrology?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }, () => {
   console.log("Db connected....");
 });
 
