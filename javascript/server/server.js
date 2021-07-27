@@ -61,9 +61,13 @@ const {
 } = require("./models/index");
 
 const URI = process.env.MONGO_URI;
-mongoose.connect("mongodb+srv://Admin:Admin@cluster0.c7mzg.mongodb.net/Astrology?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }, () => {
-  console.log("Db connected....");
-});
+mongoose.connect(
+  "mongodb+srv://Admin:Admin@cluster0.c7mzg.mongodb.net/Astrology?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log("Db connected....");
+  }
+);
 
 console.log("db");
 app.use(bodyParser.json());

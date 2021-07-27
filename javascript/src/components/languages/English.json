@@ -1,0 +1,30 @@
+{
+  "houseId": "House id",
+  "signLord": "Sign lord",
+  "starLord": "Star lord",
+  "mercury": "Mercury",
+  "rahu": "Rahu",
+
+  "moon": "Moon",
+  "saturn": "Saturn",
+
+  "sun": "Sun",
+  "ketu": "Ketu",
+  "venus": "Venus",
+
+  "mars": "Mars",
+  "jupiter": "Jupiter",
+
+  "me": "Me",
+  "ra": "Ra",
+
+  "mo": "Mo",
+  "sa": "Sa",
+
+  "su": "Su",
+  "ke": "Ke",
+  "ve": "Ve",
+
+  "ma": "Ma",
+  "ju": "Ju"
+}

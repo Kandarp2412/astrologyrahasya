@@ -58,6 +58,7 @@ const GlobalState = (props) => {
   const addDate = moment(birthDateVal.current.value).format("DD");
 
   const [transitionDate, setTransitionDate] = useState(equation);
+  const [write, setWrite] = useState(false);
 
   const [progrestionDate, setProgressionDate] = useState(addDate);
 
@@ -152,6 +153,8 @@ const GlobalState = (props) => {
         locationVal,
         namesVal,
         birthTimeVal,
+        write,
+        setWrite,
       }}
     >
       {children}

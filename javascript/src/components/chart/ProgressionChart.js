@@ -150,8 +150,8 @@ function ProgressionChart() {
                 /> */}
               <div
                 style={{
-                  height: "22vw",
-                  width: "22vw",
+                  height: "23vw",
+                  width: "23vw",
                   minWidth: "18rem",
                   minHeight: "18rem",
                   // marginBottom: "30px",
@@ -159,9 +159,9 @@ function ProgressionChart() {
                   display: "flex",
                   justifyContent: "flex",
                   marginTop: "-15px",
-                  marginLeft: "-35px",
+                  marginLeft: "-20px",
                   // marginBottom: "-28px",
-                  // marginRight: "-35px",
+                  // marginRight: "10px",
                   // marginLeft: "-15px",
                   backgroundColor: "#FAF7D2",
                   // padding: "10px",

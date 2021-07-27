@@ -8,7 +8,7 @@ import { globalContext } from "../../contexts/Context";
 import BirthChartSVG from "./BirthChartSVG";
 import NorthIndianStyle from "./NorthIndianStyle";
 import PropTypes from "prop-types";
-import { Divider } from "@material-ui/core";
+import { Autocomplete, Divider, TextField } from "@material-ui/core";
 import Toggle from "react-toggle";
 import "./Toggle.css";
 
@@ -85,6 +85,30 @@ function BirthChart(props) {
     // console.log(toggleTrue);
   };
 
+  const top100Films = [
+    { title: "Birth Chart" },
+    { title: "Sun Chart" },
+    { title: "Moon Chart" },
+    { title: "Chalit Chart" },
+    { title: "Hora Chart" },
+    { title: "Dreshkan Chart" },
+    { title: "Chathurthamasha Chart" },
+    { title: "Panchmansha Chart" },
+    { title: "Saptamansha Chart" },
+    { title: "Ashtamansha Chart" },
+    { title: "Navamansha Chart" },
+    { title: "Dashamansha Chart" },
+    { title: "Dwadashamsha Chart" },
+    { title: "Shodashamsha Chart" },
+    { title: "Vishmansha Chart" },
+    { title: "Chaturvimshamsha Chart" },
+    { title: "Bhamsha" },
+    { title: "Trishamansha Chart" },
+    { title: "Khavedamansha Chart" },
+    { title: "Akshvedamsha Chart" },
+    { title: "Shashtymasha Chart" },
+  ];
+
   // const handleCharts = (e) => {
   //   setChartsShow(e.target.value);
   //   console.log(e.target.value);
@@ -109,6 +133,7 @@ function BirthChart(props) {
                     }}
                   />
                 </div> */}
+
               <div
                 style={{
                   display: "flex",
@@ -122,12 +147,34 @@ function BirthChart(props) {
                 </div> */}
                 {/* <div> */}
                 <div>
-                  <input
-                    list="secondchart"
-                    // onClick={(e) => handleCharts(e)}
+                  <Autocomplete
+                    id="combo-box-demo"
+                    options={top100Films}
+                    getOptionLabel={(option) => option.title}
                     style={{
-                      // display: "flex",
-                      // marginLeft: "15px",
+                      width: "220px",
+                      marginTop: "15px",
+                      marginLeft: "-10px",
+                      marginBottom: "-15px",
+                      minWidth: "10rem",
+                    }}
+                    hiddenLabel="true"
+                    renderInput={(params) => (
+                      <TextField
+                        // placeholder="combo-box"
+                        {...params}
+                        // label=" "
+                        // placeholder="abd"
+                        defaultValue="d1Chart"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                  {/* <input
+                    list="secondchart"
+                    
+                    style={{
+                     
                       fontSize: "14px",
                       height: "30px",
                       marginTop: "25px",
@@ -158,7 +205,7 @@ function BirthChart(props) {
                     <option>Khavedamansha Chart</option>
                     <option>Akshvedamsha Chart</option>
                     <option>Shashtymasha Chart</option>
-                  </datalist>
+                  </datalist> */}
                   {/* <label htmlFor="cheese-status" style={{ marginLeft: "5px" }}>
                     Hide Details
                   </label> */}
@@ -178,17 +225,17 @@ function BirthChart(props) {
                   marginBottom: "10px",
                   // marginTop: "15px",
                   textAlign: "justify",
-                  width: "22vw",
+                  width: "23vw",
                   minWidth: "18rem",
-                  // marginRight: "20px",
+                  marginLeft: "-10px",
                   // width: "450px",
                   // minWidth: "200px",
                 }}
               />
               <div
                 style={{
-                  height: "22vw",
-                  width: "22vw",
+                  height: "23vw",
+                  width: "23vw",
                   minWidth: "18rem",
                   minHeight: "18rem",
                   // marginBottom: "30px",
@@ -196,7 +243,7 @@ function BirthChart(props) {
                   display: "flex",
                   justifyContent: "flex",
                   // marginTop: "-13px",
-                  // marginLeft: "-25px",
+                  marginLeft: "-10px",
                   // marginBottom: "-33px",
                   marginRight: "-25px",
                   backgroundColor: "#FAF7D2",

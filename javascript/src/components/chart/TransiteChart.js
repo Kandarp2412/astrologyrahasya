@@ -38,6 +38,8 @@ function TransiteChart(props) {
     chartType,
   } = useContext(globalContext);
 
+  // console.log(chartsShow);
+
   // const { isDark } = useContext(AppContext);
   // const [progressionChart, setProgressionChart] = useState(formData.birthDate);
   // const [transitChart, setTransitChart] = useState({});
@@ -121,8 +123,8 @@ function TransiteChart(props) {
                 /> */}
               <div
                 style={{
-                  height: "22vw",
-                  width: "22vw",
+                  height: "23vw",
+                  width: "23vw",
                   minWidth: "18rem",
                   minHeight: "18rem",
                   // marginBottom: "30px",
@@ -130,7 +132,7 @@ function TransiteChart(props) {
                   display: "flex",
                   justifyContent: "flex",
                   marginTop: "-25px",
-                  marginLeft: "-45px",
+                  marginLeft: "-30px",
                   // marginBottom: "-30px",
                   // marginRight: "-45px",
                   backgroundColor: "#FAF7D2",
@@ -158,15 +160,15 @@ function TransiteChart(props) {
                         selectedCharts={selectedCharts}
                       />
                     ))} */}
-                {data && transitChart ? (
+                {data ? (
                   chartType === "North Indian" ? (
                     <NorthIndianStyle
-                      data={transitChart?.[chartsShow]}
+                      data={data?.charts[chartsShow]}
                       selectedCharts={selectedCharts}
                     />
                   ) : data ? (
                     <BirthChartSVG
-                      data={transitChart?.[chartsShow]}
+                      data={data?.charts[chartsShow]}
                       selectedCharts={selectedCharts}
                     />
                   ) : chartType === "North Indian" ? (

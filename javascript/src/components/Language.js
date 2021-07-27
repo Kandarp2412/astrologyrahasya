@@ -5,22 +5,22 @@ import PropTypes from "prop-types";
 
 // create the language context with default selected language
 export const LanguageContext = createContext({
-  userLanguage: "en",
-  dictionary: dictionaryList.en,
+  userLanguage: "English",
+  dictionary: dictionaryList.English,
 });
 
 // it provides the language context to app
 export function LanguageProvider(props) {
   const { children } = props;
   console.log(children);
-  const defaultLanguage = window.localStorage.getItem("rcml-lang");
+  const defaultLanguage = window.localStorage.getItem("English");
   const [userLanguage, setUserLanguage] = useState(defaultLanguage || "");
 
   const provider = {
     userLanguage,
     dictionary: dictionaryList[userLanguage],
     userLanguageChange: (selected) => {
-      const newLanguage = languageOptions[selected] ? selected : "en";
+      const newLanguage = languageOptions[selected] ? selected : "English";
       setUserLanguage(newLanguage);
       window.localStorage.setItem("rcml-lang", newLanguage);
     },

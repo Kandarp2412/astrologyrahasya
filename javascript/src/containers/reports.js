@@ -57,7 +57,7 @@ export const Reports = () => {
 
   const location = useLocation();
 
-  console.log(chartType);
+  // console.log(chartType);
 
   const [age, setAge] = useState("South Indian");
   const [open, setOpen] = useState(false);
@@ -97,7 +97,6 @@ export const Reports = () => {
             <BirthDetailsForm />
             <Box sx={{ flexGrow: 1 }} />
           </Box>
-          
         </Box>
         <Outlet />
       </Container>

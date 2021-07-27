@@ -4,6 +4,7 @@ import { globalContext } from "../../contexts/Context";
 // import AppContext, { globalContext } from "../../context/Context";
 // import { Text } from "../dashboard/Language";
 import PropTypes from "prop-types";
+import { Text } from "../Language";
 
 const DetailMapper = (props) => {
   const { x, y, detail, signNumber } = props;
@@ -23,14 +24,14 @@ const DetailMapper = (props) => {
       {detailArray.map(([key, obj], index) => {
         return (
           <text
-            style={{ fill: "black", fontSize: "18px" }}
+            style={{ fill: "black", fontSize: "17px", marginTop: "10px" }}
             key={obj.text}
             id="XMLID_77_"
             transform={`translate(${x + 30} ${y + index * 14 - 14})`}
             className="st5 st6 detail"
           >
-            {obj.text}
-            {/* {obj.graha ? (
+            {/* {obj.text} */}
+            {obj.graha ? (
               <>
                 {" "}
                 <Text tid={obj.graha} /> {""}
@@ -40,7 +41,7 @@ const DetailMapper = (props) => {
               </>
             ) : (
               obj.text
-            )} */}
+            )}
           </text>
         );
       })}
@@ -150,13 +151,15 @@ function BirthChartSVG(props) {
           <text id="XMLID_79_" x={190.125 + xOffset} y={13.52 + yOffset} className="st5 st6">
             {/* {data[1]?.moonPos && `Mo(${data[1]?.moonPos})`} */}
           </text>
+          {/* <div style={{}}> */}
           <DetailMapper
-            // style={{ fontSize: "20px" }}
+            // style={{ marginBottom: "10px" }}
             signNumber={1}
             x={153}
             y={50.0}
             detail={data[1]}
           />
+          {/* </div> */}
           <text id="XMLID_11_" x={127.333 + xOffset} y={13.52 + yOffset} className="st5 st6">
             {/* As({data[1]?.asc}) */}
           </text>

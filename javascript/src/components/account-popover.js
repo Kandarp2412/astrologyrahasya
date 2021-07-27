@@ -151,7 +151,7 @@ export const AccountPopover = (props) => {
             }}
           >
             <Switch checked={darkMode} onChange={onSwitchTheme} />
-            {console.log("changed")}
+            {/* {console.log("changed")} */}
             <Typography color="textPrimary" variant="body2">
               Dark Mode
             </Typography>

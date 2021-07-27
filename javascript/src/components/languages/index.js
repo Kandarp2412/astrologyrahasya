@@ -1,17 +1,17 @@
-import te from "./te.json";
-import en from "./en.json";
-import ta from "./ta.json";
-import hi from "./hi.json";
-import ma from "./ma.json";
-import ka from "./ka.json";
+import Telugu from "./Telugu.json";
+import English from "./English.json";
+import Tamil from "./Tamil.json";
+import Hindi from "./Hindi.json";
+import Malyalam from "./Malyalam.json";
+import Kannada from "./Kannada.json";
 
-export const dictionaryList = { en, te, ta, hi, ma, ka };
+export const dictionaryList = { English, Telugu, Tamil, Hindi, Malyalam, Kannada };
 
 export const languageOptions = {
-  en: "English",
-  hi: "Hindi",
-  ta: "Tamil",
-  te: "Telugu",
-  ma: "Malyalam",
-  ka: "kannada",
+  English: "English",
+  Hindi: "Hindi",
+  Tamil: "Tamil",
+  Telugu: "Telugu",
+  Malyalam: "Malyalam",
+  Kannada: "kannada",
 };

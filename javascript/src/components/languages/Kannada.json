@@ -1,0 +1,38 @@
+{
+  "houseId": "House id",
+  "signLord": "Sign lord",
+  "starLord": "Star lord",
+  "Mercury": "ಬುಧ",
+  "Rahu": "ರಾಹು",
+
+  "Moon": "ಚಂದ್ರ",
+  "Saturn": "ಶನಿ",
+
+  "Sun": "ಸೂರ್ಯ",
+  "Ketu": "ಕೇತು",
+  "Venus": "ಶುಕ್ರ",
+
+  "Mars": "ಮಂಗಳ",
+  "Jupiter": "ಗುರು",
+
+  "Uranus": "ಯುರೇನಸ್",
+  "Neptune": "ನೆಪ್ಚೂನ್",
+  "Pluto": "ಪ್ಲುಟೊ",
+
+  "Me": "ಬು",
+  "Ra": "ರಾ",
+
+  "Mo": "ಚಂ",
+  "Sa": "ಶ",
+
+  "Su": "ಸೂ",
+  "Ke": "ಕೇ",
+  "Ve": "ಶು",
+
+  "Ma": "ಮಂ",
+  "Ju": "ಗು",
+
+  "Ur": "ಯು",
+  "Ne": "ನೆ",
+  "Pl": "ಪ್ಲಾ"
+}

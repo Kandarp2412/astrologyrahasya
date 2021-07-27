@@ -33,6 +33,8 @@ import {
   Select,
   MenuItem,
   Button,
+  FormControlLabel,
+  Checkbox,
 } from "@material-ui/core";
 // import { Demo } from "./Demo";
 // import csc from "countries-states-cities";
@@ -99,9 +101,11 @@ const BirthDetailsForm = () => {
     birthTimeVal,
   } = useContext(globalContext);
 
-  console.log(chartType);
+  // console.log(chartType);
 
   const searchTime = useRef(0);
+  const [checkEdit, setCheckEdit] = useState(false);
+  const [checkSubmit, setCheckSubmit] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -225,6 +229,14 @@ const BirthDetailsForm = () => {
   const handleTextFeild = (event, val) => {
     val ? setLatidude(val.latitude) : setLatidude("");
     val ? setlongitude(val.longitude) : setlongitude("");
+  };
+
+  const handleEdit = () => {
+    setCheckEdit(!checkEdit);
+  };
+
+  const handleCheckBoxSubmit = () => {
+    setCheckSubmit(!checkSubmit);
   };
 
   // useEffect(() => {
@@ -380,7 +392,7 @@ const BirthDetailsForm = () => {
               <MenuItem value="South Indian">South Indian</MenuItem>
             </Select>
           </Grid>
-          <Grid item md={1} xs={12}>
+          {/* <Grid item md={1} xs={12}>
             <InputLabel htmlFor="name">Ayanamsha</InputLabel>
             <Select
               value={selectedAyanamsha}
@@ -396,7 +408,7 @@ const BirthDetailsForm = () => {
                   );
                 })}
             </Select>
-          </Grid>
+          </Grid> */}
           {/* <Grid item md={1} xs={12}>
             <InputLabel htmlFor="name">Date of birth</InputLabel>
             <TextField
@@ -418,6 +430,7 @@ const BirthDetailsForm = () => {
           <Grid item md={1} xs={12}>
             <InputLabel></InputLabel>
             <Button
+              onClick={(event) => handleSubmit(event)}
               variant="contained"
               color="primary"
               style={{ height: "40px", marginLeft: "20px", marginTop: "20px" }}
@@ -427,16 +440,16 @@ const BirthDetailsForm = () => {
           </Grid>
         </Grid>
 
-        {/* for desktop view */}
+        {/*------------------------- for desktop view------------------------------------ */}
 
-        <Grid sx={{ display: { xs: "none", md: "flex" } }}>
+        <Grid sx={{ display: { xs: "none", md: "flex" }, marginLeft: "-79px" }}>
           <Grid item>
             <InputLabel htmlFor="name">Search saved profile</InputLabel>
             <TextField
               id="outlined-basic"
               variant="outlined"
               size="small"
-              style={{ width: 150 }}
+              style={{ width: 170 }}
               name="name"
               inputRef={namesVal}
             />
@@ -447,7 +460,7 @@ const BirthDetailsForm = () => {
             <TextField
               id="date"
               variant="outlined"
-              style={{ width: 185 }}
+              style={{ width: 177 }}
               size="small"
               type="date"
               inputRef={birthDateVal}
@@ -467,7 +480,7 @@ const BirthDetailsForm = () => {
                 onChange={(newValue) => {
                   setValue(newValue);
                 }}
-                style={{ width: 185, height: 8 }}
+                style={{ width: 150, height: 8 }}
                 selected={value}
                 inputRef={birthTimeVal}
                 renderInput={(params) => <TextField {...params} inputRef={birthTimeVal} />}
@@ -491,7 +504,7 @@ const BirthDetailsForm = () => {
                   options.country_name
                 }`
               }
-              style={{ width: 280 }}
+              style={{ width: 310 }}
               onInputChange={handleBirthPlace}
               name="location"
               renderInput={(params) => (
@@ -518,7 +531,7 @@ const BirthDetailsForm = () => {
             </Select>
           </Grid>
 
-          <Grid item style={{ marginLeft: "10px" }}>
+          {/* <Grid item style={{ marginLeft: "10px" }}>
             <InputLabel htmlFor="name">Ayanamsha</InputLabel>
             <Select
               value={selectedAyanamsha}
@@ -533,7 +546,65 @@ const BirthDetailsForm = () => {
                   );
                 })}
             </Select>
-          </Grid>
+          </Grid> */}
+
+          {checkSubmit ? (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  disabled
+                  // checked={state.checkedB}
+                  onChange={handleEdit}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Edit"
+              style={{ marginTop: "-40px", marginLeft: "3px", marginRight: "9px" }}
+            />
+          ) : (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={state.checkedB}
+                  onChange={handleEdit}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Edit"
+              style={{ marginTop: "-40px", marginLeft: "3px", marginRight: "9px" }}
+            />
+          )}
+
+          {checkEdit ? (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  disabled
+                  // checked={state.checkedB}
+                  // onChange={handleChange}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Save"
+              style={{ marginTop: "-40px", marginRight: "-15px" }}
+            />
+          ) : (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={state.checkedB}
+                  onChange={handleCheckBoxSubmit}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Save"
+              style={{ marginTop: "-40px", marginRight: "-15px" }}
+            />
+          )}
 
           <Grid item>
             <InputLabel></InputLabel>
@@ -541,14 +612,14 @@ const BirthDetailsForm = () => {
               onClick={(event) => handleSubmit(event)}
               variant="contained"
               color="primary"
-              style={{ height: "40px", marginLeft: "20px", marginTop: "20px" }}
+              style={{ height: "40px", marginLeft: "-100px", width: "110px", marginTop: "20px" }}
             >
               Submit
             </Button>
           </Grid>
         </Grid>
         {advancedOption === true ? (
-          <div style={{ display: "flex", marginTop: "100px", marginLeft: "-855px" }}>
+          <div style={{ display: "flex", marginTop: "10px", marginLeft: "-75px" }}>
             <Grid item>
               <InputLabel htmlFor="longitude">Latitude</InputLabel>
               <TextField

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@emotion/react";
@@ -38,6 +38,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import "../containers/Report.css";
 import DarkLogo from "../icons/logo-RVA.png";
+import { LanguageContext } from "./Language";
 
 const organizations = [
   {
@@ -55,6 +56,7 @@ export const DashboardNavbar = () => {
   const [currentOrganization, setCurrentOrganization] = useState(organizations[0]);
   const [languageOption, setLanguageOption] = useState(false);
   const [language, setLanguage] = useState("English");
+  const { userLanguage, userLanguageChange } = useContext(LanguageContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -70,6 +72,13 @@ export const DashboardNavbar = () => {
   const handleLanguage = () => {
     setLanguageOption(!languageOption);
     console.log(languageOption);
+  };
+
+  const handleLanguageChange = (e) => {
+    // console.log(e.target.lastChild.data);
+    userLanguageChange(e.target.lastChild === null ? "English" : e.target.lastChild.data);
+    // console.log(e.target.name.length);
+    console.log(userLanguage);
   };
 
   const handleOrganizationChange = (organizationId) => {
@@ -230,6 +239,7 @@ export const DashboardNavbar = () => {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            onClick={(e) => handleLanguageChange(e)}
           >
             <MenuItem
               onClick={(e) => handleClose(e, "English")}
@@ -244,7 +254,7 @@ export const DashboardNavbar = () => {
             <MenuItem
               onClick={(e) => handleClose(e, "Hindi")}
               style={{ backgroundColor: language === "Hindi" ? "lightblue" : "white" }}
-              name="hindi"
+              name="Hindi"
             >
               Hindi
             </MenuItem>
