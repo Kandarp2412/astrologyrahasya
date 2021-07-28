@@ -23,6 +23,8 @@ import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import TimePicker from "@material-ui/lab/TimePicker";
 import { globalContext } from "../contexts/Context";
 import BirthDetailsForm from "../components/chart/BirthDetailsForm";
+import PlanetDetails from "../components/tables/PlanetDetails";
+import Rahsyatask from "../components/tables/Rahsyatask";
 // import { makeStyles } from '@material-ui/core';
 // import TextField from '@material-ui/core/TextField';
 
@@ -99,6 +101,15 @@ export const Reports = () => {
           </Box>
         </Box>
         <Outlet />
+        {/* <PlanetDetails /> */}
+        <Grid container spacing={3} style={{ padding: "0px", margin: "0px" }}>
+          <Grid item md={6} xs={12}>
+            <Rahsyatask />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <Rahsyatask />
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );

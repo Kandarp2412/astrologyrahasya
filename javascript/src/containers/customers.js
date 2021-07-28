@@ -1,32 +1,33 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Box, Button, Card, Container, Divider, Typography } from '@material-ui/core';
-import { customerApi } from '../api/customer';
-import { CustomerDialog } from '../components/customer/customer-dialog';
-import { CustomersFilter } from '../components/customer/customers-filter';
-import { CustomersTable } from '../components/customer/customers-table';
-import { useMounted } from '../hooks/use-mounted';
-import { useSelection } from '../hooks/use-selection';
-import { Plus as PlusIcon } from '../icons/plus';
-import gtm from '../lib/gtm';
+import { useCallback, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { Box, Button, Card, Container, Divider, Typography } from "@material-ui/core";
+import { customerApi } from "../api/customer";
+import { CustomerDialog } from "../components/customer/customer-dialog";
+import { CustomersFilter } from "../components/customer/customers-filter";
+import { CustomersTable } from "../components/customer/customers-table";
+import { useMounted } from "../hooks/use-mounted";
+import { useSelection } from "../hooks/use-selection";
+import { Plus as PlusIcon } from "../icons/plus";
+import gtm from "../lib/gtm";
+import axios from "axios";
 
 export const Customers = () => {
   const mounted = useMounted();
   const [controller, setController] = useState({
     filters: [],
     page: 0,
-    query: '',
-    sort: 'desc',
-    sortBy: 'createdAt',
-    view: 'all'
+    query: "",
+    sort: "desc",
+    sortBy: "createdAt",
+    view: "all",
   });
   const [customersState, setCustomersState] = useState({ isLoading: true });
-  const [
-    selectedCustomers,
-    handleSelect,
-    handleSelectAll
-  ] = useSelection(customersState.data?.customers);
+  const [selectedCustomers, handleSelect, handleSelectAll] = useSelection(
+    customersState.data?.customers
+  );
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
+
+  const [userData, setUserData] = useState([]);
 
   const getCustomers = useCallback(async () => {
     setCustomersState(() => ({ isLoading: true }));
@@ -38,13 +39,13 @@ export const Customers = () => {
         query: controller.query,
         sort: controller.sort,
         sortBy: controller.sortBy,
-        view: controller.view
+        view: controller.view,
       });
 
       if (mounted.current) {
         setCustomersState(() => ({
           isLoading: false,
-          data: result
+          data: result,
         }));
       }
     } catch (err) {
@@ -53,7 +54,7 @@ export const Customers = () => {
       if (mounted.current) {
         setCustomersState(() => ({
           isLoading: false,
-          error: err.message
+          error: err.message,
         }));
       }
     }
@@ -64,14 +65,14 @@ export const Customers = () => {
   }, [controller]);
 
   useEffect(() => {
-    gtm.push({ event: 'page_view' });
+    gtm.push({ event: "page_view" });
   }, []);
 
   const handleViewChange = (newView) => {
     setController({
       ...controller,
       page: 0,
-      view: newView
+      view: newView,
     });
   };
 
@@ -79,7 +80,7 @@ export const Customers = () => {
     setController({
       ...controller,
       page: 0,
-      query: newQuery
+      query: newQuery,
     });
   };
 
@@ -87,13 +88,13 @@ export const Customers = () => {
     const parsedFilters = newFilters.map((filter) => ({
       property: filter.property.name,
       value: filter.value,
-      operator: filter.operator.value
+      operator: filter.operator.value,
     }));
 
     setController({
       ...controller,
       page: 0,
-      filters: parsedFilters
+      filters: parsedFilters,
     });
   };
 
@@ -101,27 +102,31 @@ export const Customers = () => {
     setController({
       ...controller,
       page: 0,
-      filters: []
+      filters: [],
     });
   };
 
   const handlePageChange = (newPage) => {
     setController({
       ...controller,
-      page: newPage - 1
+      page: newPage - 1,
     });
   };
 
   const handleSortChange = (event, property) => {
-    const isAsc = controller.sortBy === property && controller.sort === 'asc';
+    const isAsc = controller.sortBy === property && controller.sort === "asc";
 
     setController({
       ...controller,
       page: 0,
-      sort: isAsc ? 'desc' : 'asc',
-      sortBy: property
+      sort: isAsc ? "desc" : "asc",
+      sortBy: property,
     });
   };
+
+  // useEffect(() => {
+  //   axios.post("http://localhost:9002/userdata").then((res) => console.log(res.data.data.name));
+  // }, []);
 
   return (
     <>
@@ -130,33 +135,30 @@ export const Customers = () => {
       </Helmet>
       <Box
         sx={{
-          backgroundColor: 'background.default',
-          flexGrow: 1
+          backgroundColor: "background.default",
+          flexGrow: 1,
         }}
       >
         <Container
           maxWidth="lg"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
           }}
         >
           <Box sx={{ py: 4 }}>
             <Box
               sx={{
-                alignItems: 'center',
-                display: 'flex'
+                alignItems: "center",
+                display: "flex",
               }}
             >
-              <Typography
-                color="textPrimary"
-                variant="h4"
-              >
+              {/* <Typography color="textPrimary" variant="h4">
                 Customers
-              </Typography>
+              </Typography> */}
               <Box sx={{ flexGrow: 1 }} />
-              <Button
+              {/* <Button
                 color="primary"
                 onClick={() => setOpenCreateDialog(true)}
                 size="large"
@@ -164,15 +166,15 @@ export const Customers = () => {
                 variant="contained"
               >
                 Add
-              </Button>
+              </Button> */}
             </Box>
           </Box>
           <Card
             variant="outlined"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              flexGrow: 1
+              display: "flex",
+              flexDirection: "column",
+              flexGrow: 1,
             }}
           >
             <CustomersFilter
@@ -204,10 +206,7 @@ export const Customers = () => {
           </Card>
         </Container>
       </Box>
-      <CustomerDialog
-        onClose={() => setOpenCreateDialog(false)}
-        open={openCreateDialog}
-      />
+      <CustomerDialog onClose={() => setOpenCreateDialog(false)} open={openCreateDialog} />
     </>
   );
 };

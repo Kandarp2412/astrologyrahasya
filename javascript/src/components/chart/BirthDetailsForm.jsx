@@ -187,31 +187,32 @@ const BirthDetailsForm = () => {
 
   // const [value, setValue] = useState("");
   // const options = useMemo(() => countryList().getData(), []);
+  console.log(locationVal.current);
 
-  let time = locationVal.current.value ? locationVal.current.value.split(",")[2] : "India";
+  // let time = locationVal.current !== null ? locationVal.current.value.split(",")[2] : "India";
 
-  useEffect(() => {
-    axios
-      .post("http://localhost:9002/timezone", {
-        birthDateVal: birthDateVal.current.value,
-        locationVal: time,
-      })
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:9002/timezone", {
+  //       birthDateVal: birthDateVal.current.value,
+  //       locationVal: time,
+  //     })
 
-      .then((res) => {
-        setTimeZone(res.data.data);
-      });
-  }, [locationVal.current.value]);
+  //     .then((res) => {
+  //       setTimeZone(res.data.data);
+  //     });
+  // }, [time]);
 
-  useEffect(() => {
-    axios
-      .post("http://localhost:9002/searching3", {
-        search: search,
-      })
-      .then((result) => {
-        setResult(result.data.data);
-      })
-      .catch((err) => console.log(err));
-  }, [search]);
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:9002/searching3", {
+  //       search: search,
+  //     })
+  //     .then((result) => {
+  //       setResult(result.data.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [search]);
 
   const handleBirthPlace = (e) => {
     console.log(e.target.value);

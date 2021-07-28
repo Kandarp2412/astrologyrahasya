@@ -1,0 +1,20 @@
+.css-1umbmef-MuiButtonBase-root-MuiButton-root:hover {
+  background-color: transparent !important;
+}
+
+.css-1umbmef-MuiButtonBase-root-MuiButton-root:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.css-1y2b0z7-MuiButtonBase-root-MuiIconButton-root:hover {
+  background-color: transparent !important;
+}
+
+.css-5doye0-MuiButtonBase-root-MuiIconButton-root:hover {
+  background-color: transparent !important;
+}
+
+button:focus {
+  outline: none;
+}

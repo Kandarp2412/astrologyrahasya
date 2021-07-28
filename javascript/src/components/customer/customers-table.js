@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import Proptypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
-import { format } from 'date-fns';
+import { useEffect, useState } from "react";
+import Proptypes from "prop-types";
+import { Link as RouterLink } from "react-router-dom";
+import { format } from "date-fns";
 import {
   Avatar,
   Box,
@@ -15,33 +15,34 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TableSortLabel
-} from '@material-ui/core';
-import { Pagination } from '../pagination';
-import { Star as StarIcon } from '../../icons/star';
-import { ResourceError } from '../resource-error';
-import { ResourceUnavailable } from '../resource-unavailable';
-import { Scrollbar } from '../scrollbar';
-import { CustomerMenu } from './customer-menu';
+  TableSortLabel,
+} from "@material-ui/core";
+import { Pagination } from "../pagination";
+import { Star as StarIcon } from "../../icons/star";
+import { ResourceError } from "../resource-error";
+import { ResourceUnavailable } from "../resource-unavailable";
+import { Scrollbar } from "../scrollbar";
+import { CustomerMenu } from "./customer-menu";
+import axios from "axios";
 
 const columns = [
   {
-    id: 'fullName',
+    id: "fullName",
     disablePadding: true,
-    label: 'Name'
+    label: "Name",
   },
   {
-    id: 'phone',
-    label: 'Phone'
+    id: "phone",
+    label: "Phone",
   },
   {
-    id: 'email',
-    label: 'Email'
+    id: "email",
+    label: "Email",
   },
   {
-    id: 'createdAt',
-    label: 'Created'
-  }
+    id: "createdAt",
+    label: "Created",
+  },
 ];
 
 export const CustomersTable = (props) => {
@@ -57,9 +58,11 @@ export const CustomersTable = (props) => {
     page,
     selectedCustomers,
     sort,
-    sortBy
+    sortBy,
   } = props;
   const [customers, setCustomers] = useState(customersProp);
+
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     setCustomers(customersProp);
@@ -72,6 +75,13 @@ export const CustomersTable = (props) => {
     setCustomers(temp);
   };
 
+  useEffect(() => {
+    axios.post("http://localhost:9002/userdata").then((res) => {
+      console.log(res.data.data);
+      setUserData(res.data.data);
+    });
+  }, []);
+
   const displayLoading = isLoading;
   const displayError = Boolean(!isLoading && error);
   const displayUnavailable = Boolean(!isLoading && !error && !customers?.length);
@@ -79,9 +89,9 @@ export const CustomersTable = (props) => {
   return (
     <Box
       sx={{
-        display: 'flex',
+        display: "flex",
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: "column",
       }}
     >
       <Scrollbar>
@@ -90,27 +100,20 @@ export const CustomersTable = (props) => {
             <TableRow>
               <TableCell padding="checkbox">
                 <Checkbox
-                  checked={
-                    customers?.length > 0
-                    && selectedCustomers.length === customers?.length
-                  }
+                  checked={customers?.length > 0 && selectedCustomers.length === customers?.length}
                   disabled={isLoading}
                   indeterminate={
-                    selectedCustomers.length > 0
-                    && selectedCustomers.length < customers?.length
+                    selectedCustomers.length > 0 && selectedCustomers.length < customers?.length
                   }
                   onChange={onSelectAll}
                 />
               </TableCell>
               <TableCell />
               {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  padding={column.disablePadding ? 'none' : 'normal'}
-                >
+                <TableCell key={column.id} padding={column.disablePadding ? "none" : "normal"}>
                   <TableSortLabel
                     active={sortBy === column.id}
-                    direction={sortBy === column.id ? sort : 'asc'}
+                    direction={sortBy === column.id ? sort : "asc"}
                     disabled={isLoading}
                     onClick={(event) => onSortChange(event, column.id)}
                   >
@@ -122,40 +125,39 @@ export const CustomersTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers?.map((customer) => (
+            {userData?.map((customer) => (
               <TableRow
                 hover
                 key={customer.id}
-                selected={!!selectedCustomers.find(
-                  (selectedCustomer) => selectedCustomer === customer.id
-                )}
+                selected={
+                  !!selectedCustomers.find((selectedCustomer) => selectedCustomer === customer.id)
+                }
               >
+                {console.log(customer)}
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={!!selectedCustomers.find(
-                      (selectedCustomer) => selectedCustomer === customer.id
-                    )}
+                    checked={
+                      !!selectedCustomers.find(
+                        (selectedCustomer) => selectedCustomer === customer.id
+                      )
+                    }
                     onChange={(event) => onSelect(event, customer.id)}
                   />
                 </TableCell>
                 <TableCell padding="none">
                   <Box
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center'
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
                     <IconButton
-                      onClick={
-                        () => handleIsFavoriteChange(customer.id, !customer.isFavorite)
-                      }
+                      onClick={() => handleIsFavoriteChange(customer.id, !customer.isFavorite)}
                       size="small"
                     >
                       <StarIcon
                         sx={{
-                          color: customer.isFavorite
-                            ? 'rgb(255, 180, 0)'
-                            : 'action.disabled'
+                          color: customer.isFavorite ? "rgb(255, 180, 0)" : "action.disabled",
                         }}
                       />
                     </IconButton>
@@ -164,19 +166,19 @@ export const CustomersTable = (props) => {
                 <TableCell padding="none">
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center'
+                      display: "flex",
+                      alignItems: "center",
                     }}
                   >
-                    <Avatar
+                    {/* <Avatar
                       src={customer.avatar}
                       sx={{
                         height: 36,
                         mr: 1,
-                        width: 36
+                        width: 36,
                       }}
                       variant="rounded"
-                    />
+                    /> */}
                     <Link
                       color="inherit"
                       component={RouterLink}
@@ -184,19 +186,13 @@ export const CustomersTable = (props) => {
                       underline="none"
                       variant="subtitle2"
                     >
-                      {customer.fullName}
+                      {customer.name}
                     </Link>
                   </Box>
                 </TableCell>
-                <TableCell>
-                  {customer.phone}
-                </TableCell>
-                <TableCell>
-                  {customer.email}
-                </TableCell>
-                <TableCell>
-                  {format(customer.createdAt, 'dd/MM/yyyy HH:mm')}
-                </TableCell>
+                {/* <TableCell>{customer.phone}</TableCell>
+                <TableCell>{customer.email}</TableCell>
+                <TableCell>{format(customer.createdAt, "dd/MM/yyyy HH:mm")}</TableCell> */}
                 <TableCell align="right">
                   <CustomerMenu />
                 </TableCell>
@@ -217,7 +213,7 @@ export const CustomersTable = (props) => {
           error={error}
           sx={{
             flexGrow: 1,
-            m: 2
+            m: 2,
           }}
         />
       )}
@@ -225,11 +221,11 @@ export const CustomersTable = (props) => {
         <ResourceUnavailable
           sx={{
             flexGrow: 1,
-            m: 2
+            m: 2,
           }}
         />
       )}
-      <Divider sx={{ mt: 'auto' }} />
+      <Divider sx={{ mt: "auto" }} />
       <Pagination
         disabled={isLoading}
         onPageChange={onPageChange}
@@ -245,8 +241,8 @@ CustomersTable.defaultProps = {
   customersCount: 0,
   page: 1,
   selectedCustomers: [],
-  sort: 'desc',
-  sortBy: 'createdAt'
+  sort: "desc",
+  sortBy: "createdAt",
 };
 
 CustomersTable.propTypes = {
@@ -261,5 +257,5 @@ CustomersTable.propTypes = {
   page: Proptypes.number,
   selectedCustomers: Proptypes.array,
   sort: Proptypes.string,
-  sortBy: Proptypes.string
+  sortBy: Proptypes.string,
 };

@@ -39,6 +39,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import "../containers/Report.css";
 import DarkLogo from "../icons/logo-RVA.png";
 import { LanguageContext } from "./Language";
+// import { useHistory } from "react-router";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./dashboard.css";
 
 const organizations = [
   {
@@ -48,6 +52,8 @@ const organizations = [
 ];
 
 export const DashboardNavbar = () => {
+  const navigate = useNavigate();
+  // let history = useHistory();
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
   const { settings, saveSettings } = useSettings();
@@ -59,6 +65,7 @@ export const DashboardNavbar = () => {
   const { userLanguage, userLanguageChange } = useContext(LanguageContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl1, setAnchorEl1] = useState(null);
 
   const handleSwitchTheme = () => {
     saveSettings({
@@ -101,6 +108,34 @@ export const DashboardNavbar = () => {
   const handleClose = (e, lang) => {
     setLanguage(lang);
     setAnchorEl(null);
+  };
+
+  const handleClose1 = (e, url) => {
+    e.preventDefault();
+    console.log(url);
+    setAnchorEl(null);
+    if (url === "backdropClick") {
+      Window.location.href = "#";
+      // window.location.href = `https://www.rahasyavedicastrology.com/services/${url}`;
+      // history.push(`https://www.rahasyavedicastrology.com/services/${url}`);
+    } else {
+      window.location.href = `https://www.rahasyavedicastrology.com/services/${url}`;
+    }
+  };
+
+  const handleOtherSoftware = (event) => {
+    setOpenMenu(!openMenu);
+    console.log(openMenu);
+    setAnchorEl1(event.currentTarget);
+  };
+
+  const handleLinks = (e) => {
+    console.log(e);
+    // history.push("https://www.rahasyavedicastrology.com/services/");
+  };
+
+  const handleHelp = () => {
+    window.location.href = "https://www.rahasyavedicastrology.com/ask/";
   };
 
   return (
@@ -163,9 +198,71 @@ export const DashboardNavbar = () => {
               mx: 3,
             }}
           />
-
           <Button
-            onClick={() => setOpenMenu(!openMenu)}
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleOtherSoftware}
+            sx={{
+              // color: "primary.contrastText",
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
+            style={{ color: darkMode ? "white" : "black" }}
+          >
+            RVA Software
+            <ArrowDropDownOutlinedIcon
+              sx={{
+                ml: 2,
+                transition: "transform 250ms",
+                transform: openMenu ? "rotate(180deg)" : "none",
+              }}
+            />
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl1)}
+            onClose={handleClose1}
+            onClick={(e) => handleLinks(e)}
+          >
+            <MenuItem
+              onClick={(e) => handleClose1(e, "horoscope-reading")}
+              style={{
+                backgroundColor: language === "Horoscop Reading" ? "lightblue" : "white",
+              }}
+              name="horoscope-reading"
+            >
+              Horoscop Reading
+            </MenuItem>
+            {/* {console.log(language)} */}
+            <MenuItem
+              onClick={(e) => handleClose1(e, "marriage-compatibility-horoscope")}
+              style={{ backgroundColor: language === "Kundali Matching" ? "lightblue" : "white" }}
+              name="marriage-compatibility-horoscope"
+            >
+              Kundali Matching
+            </MenuItem>
+            <MenuItem
+              onClick={(e) => handleClose1(e, "career-horoscope")}
+              style={{ backgroundColor: language === "Career Astrology" ? "lightblue" : "white" }}
+              name="career-horoscope"
+            >
+              Career Astrology
+            </MenuItem>
+            <MenuItem
+              onClick={(e) => handleClose1(e, "muhurthas")}
+              style={{ backgroundColor: language === "Auspicious Muhurat" ? "lightblue" : "white" }}
+              name="muhurthas"
+            >
+              Auspicious Muhurat
+            </MenuItem>
+          </Menu>
+
+          {/* <Button
+            onClick={() => handleClick}
             sx={{
               // color: "primary.contrastText",
               display: {
@@ -185,6 +282,24 @@ export const DashboardNavbar = () => {
               }}
             />
           </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            onClick={(e) => handleLanguageChange(e)}
+          >
+            <MenuItem
+              onClick={(e) => handleClose(e, "English")}
+              style={{
+                backgroundColor: language === "English" ? "lightblue" : "white",
+              }}
+              name="English"
+            >
+              English
+            </MenuItem>
+          </Menu> */}
 
           <DashboardNavbarMenu onClose={() => setOpenMenu(false)} open={mdDown && openMenu} />
           <Button
@@ -224,10 +339,16 @@ export const DashboardNavbar = () => {
                 xs: "none",
                 md: "flex",
               },
+              width: "30px",
             }}
           >
             <TranslateOutlinedIcon
-              style={{ color: darkMode ? "blue" : "gray", cursor: "pointer" }}
+              style={{
+                color: darkMode ? "blue" : "gray",
+                cursor: "pointer",
+                marginRight: "-10px",
+                padding: "0px",
+              }}
               onClick={handleLanguage}
               currentOrganization={currentOrganization}
               organizations={organizations}
@@ -298,12 +419,15 @@ export const DashboardNavbar = () => {
                 xs: "none",
               },
               color: darkMode ? "white" : "gray",
+              width: "30px",
+              marginRight: "10px",
             }}
           >
             {darkMode ? <SunIcon /> : <MoonIcon />}
           </IconButton>
           <HelpOutlineOutlinedIcon
-            style={{ color: darkMode ? "white" : "gray", marginRight: "10px" }}
+            onClick={handleHelp}
+            style={{ color: darkMode ? "white" : "gray", marginRight: "15px", cursor: "pointer" }}
             sx={{
               // color: "primary.contrastText",
               display: {
@@ -321,12 +445,12 @@ export const DashboardNavbar = () => {
                 xs: "inline-flex",
               },
               color: darkMode ? "white" : "gray",
-              marginRight: "10px",
+              marginRight: "15px",
             }}
           />
 
           <AppsOutlinedIcon
-            style={{ color: darkMode ? "white" : "gray", marginRight: "10px" }}
+            style={{ color: darkMode ? "white" : "gray", marginRight: "5px" }}
             sx={{
               // color: "primary.contrastText",
               display: {
@@ -346,7 +470,7 @@ export const DashboardNavbar = () => {
             organizations={organizations}
           />
         </Toolbar>
-        <Divider style={{ borderColor: "black" }} />
+        {/* <Divider style={{ borderColor: "black" }} /> */}
       </AppBar>
     </div>
   );

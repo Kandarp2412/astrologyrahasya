@@ -265,13 +265,13 @@ app.post("/userdata", async function (req, res) {
 app.listen(9002, (err) => {
   if (err) console.log(err);
   console.log("running on http://localhost:9002");
-  // db.sequelize.authenticate();
-  // db.sequelize
-  //   .sync({ alter: true })
-  //   .then(() => {
-  //     console.log("database Connected");
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  db.sequelize.authenticate();
+  db.sequelize
+    .sync({ alter: true })
+    .then(() => {
+      console.log("database Connected");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });

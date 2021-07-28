@@ -8,13 +8,16 @@ module.exports = (sequelize, Sequelize) => {
       date: {
         type: Sequelize.DATE,
       },
-      // time: {
-      //   type: Sequelize.INTEGER,
-      // },
       birthplace: {
         type: Sequelize.TEXT,
       },
       moon_sign: {
+        type: Sequelize.TEXT,
+      },
+      email: {
+        type: Sequelize.TEXT,
+      },
+      phonenumber: {
         type: Sequelize.TEXT,
       },
     },
