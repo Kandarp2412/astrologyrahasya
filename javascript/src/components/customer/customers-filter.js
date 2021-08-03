@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Button, Divider, Tab, Tabs } from '@material-ui/core';
-import { Adjustments as AdjustmentsIcon } from '../../icons/adjustments';
+import { useContext, useState } from "react";
+import PropTypes from "prop-types";
+import { Box, Button, Divider, Tab, Tabs } from "@material-ui/core";
+import { Adjustments as AdjustmentsIcon } from "../../icons/adjustments";
 import {
   containsOperator,
   endsWithOperator,
@@ -14,48 +14,57 @@ import {
   lessThanOperator,
   notContainsOperator,
   notEqualOperator,
-  startsWithOperator
-} from '../../utils/filter-operators';
-import { BulkActionsMenu } from '../bulk-actions-menu';
-import { Query } from '../query';
-import { FilterDialog } from '../filter-dialog';
+  startsWithOperator,
+} from "../../utils/filter-operators";
+import { BulkActionsMenu } from "../bulk-actions-menu";
+import { Query } from "../query";
+import { FilterDialog } from "../filter-dialog";
+import { globalContext } from "../../contexts/Context";
 
 const views = [
   {
-    label: 'All',
-    value: 'all'
+    label: "All",
+    value: "all1",
   },
   {
-    label: 'Returning',
-    value: 'isReturning'
+    label: "Netal",
+    value: "all",
   },
   {
-    label: 'Ordered recently',
-    value: 'orderedRecently'
+    label: "Event",
+    value: "Event",
+  },
+  {
+    label: "Horary",
+    value: "Horary",
+  },
+  {
+    label:"Favorites",
+    value:true,
   }
 ];
 
 const filterProperties = [
   {
-    label: 'Name',
-    name: 'fullName',
-    type: 'string'
+    label: "Name",
+    name: "fullName",
+    type: "string",
   },
   {
-    label: 'Phone',
-    name: 'phone',
-    type: 'string'
+    label: "Phone",
+    name: "phone",
+    type: "string",
   },
   {
-    label: 'Email',
-    name: 'email',
-    type: 'string'
+    label: "Email",
+    name: "email",
+    type: "string",
   },
   {
-    label: 'Created',
-    name: 'createdAt',
-    type: 'date'
-  }
+    label: "Date Of Birth",
+    name: "createdAt",
+    type: "string",
+  },
 ];
 
 const filterOperators = [
@@ -70,7 +79,7 @@ const filterOperators = [
   isAfterOperator,
   isBeforeOperator,
   isBlankOperator,
-  isPresentOperator
+  isPresentOperator,
 ];
 
 export const CustomersFilter = (props) => {
@@ -83,18 +92,20 @@ export const CustomersFilter = (props) => {
     onViewChange,
     query,
     selectedCustomers,
-    view
+    view,
   } = props;
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
 
+  const {setSelectedChartType ,userData} = useContext(globalContext);
+  // console.log(userData)
   return (
     <>
       <div>
         <Box
           sx={{
             px: {
-              sm: 3
-            }
+              sm: 3,
+            },
           }}
         >
           <Tabs
@@ -105,6 +116,7 @@ export const CustomersFilter = (props) => {
           >
             {views.map((option) => (
               <Tab
+                onClick={(e) => setSelectedChartType(e.target.outerText)}
                 disabled={disabled}
                 key={option.label}
                 label={option.label}
@@ -116,28 +128,28 @@ export const CustomersFilter = (props) => {
         <Divider />
         <Box
           sx={{
-            alignItems: 'center',
-            display: 'grid',
+            alignItems: "center",
+            display: "grid",
             gap: 2,
             gridTemplateColumns: {
-              sm: selectedCustomers.length > 0 ? 'auto 1fr auto' : '1fr auto',
-              xs: 'auto'
+              sm: selectedCustomers.length > 0 ? "auto 1fr auto" : "1fr auto",
+              xs: "auto",
             },
-            justifyItems: 'flex-start',
-            p: 3
+            justifyItems: "flex-start",
+            p: 3,
           }}
         >
           <BulkActionsMenu
             disabled={disabled}
-            onArchive={() => { }}
-            onDelete={() => { }}
+            onArchive={() => {}}
+            onDelete={() => {}}
             selectedCount={selectedCustomers.length}
             sx={{
-              display: selectedCustomers.length > 0 ? 'flex' : 'none',
+              display: selectedCustomers.length > 0 ? "flex" : "none",
               order: {
                 sm: 1,
-                xs: 2
-              }
+                xs: 2,
+              },
             }}
           />
           <Query
@@ -146,8 +158,8 @@ export const CustomersFilter = (props) => {
             sx={{
               order: {
                 sm: 2,
-                xs: 1
-              }
+                xs: 1,
+              },
             }}
             value={query}
           />
@@ -158,7 +170,7 @@ export const CustomersFilter = (props) => {
             startIcon={<AdjustmentsIcon />}
             size="large"
             sx={{ order: 3 }}
-            variant={filters.length ? 'contained' : 'text'}
+            variant={filters.length ? "contained" : "text"}
           >
             Filter
           </Button>
@@ -179,7 +191,7 @@ export const CustomersFilter = (props) => {
 CustomersFilter.defaultProps = {
   filters: [],
   selectedCustomers: [],
-  view: 'all'
+  view: "all",
 };
 
 CustomersFilter.propTypes = {
@@ -191,5 +203,5 @@ CustomersFilter.propTypes = {
   onViewChange: PropTypes.func,
   query: PropTypes.string,
   selectedCustomers: PropTypes.array,
-  view: PropTypes.string
+  view: PropTypes.string,
 };

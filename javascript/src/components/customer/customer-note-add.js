@@ -1,13 +1,21 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Button, Card, Divider, IconButton, InputBase, Typography } from '@material-ui/core';
-import { ChevronDown as ChevronDownIcon } from '../../icons/chevron-down';
-import { Eye as EyeIcon } from '../../icons/eye';
-import { PaperClip as PaperClipIcon } from '../../icons/paper-clip';
+import { useContext, useState } from "react";
+import PropTypes from "prop-types";
+import { Box, Button, Card, Divider, IconButton, InputBase, Typography } from "@material-ui/core";
+import { ChevronDown as ChevronDownIcon } from "../../icons/chevron-down";
+import { Eye as EyeIcon } from "../../icons/eye";
+import { PaperClip as PaperClipIcon } from "../../icons/paper-clip";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { globalContext } from "../../contexts/Context";
 
 export const CustomerNoteAdd = (props) => {
   const { onSend, submitDisabled, ...other } = props;
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
+
+  const { addNotesFlag, setAddNotesFlag } = useContext(globalContext);
+
+  let { customerId } = useParams();
 
   const handleChange = (event) => {
     setContent(event.target.value);
@@ -15,19 +23,24 @@ export const CustomerNoteAdd = (props) => {
 
   const handleSend = () => {
     onSend?.(content);
-    setContent('');
+    axios
+      .post(`http://localhost:9003/api/profile/notes/${customerId}`, { notes: content })
+      .then((res) => {
+        window.location.reload(true);
+        setAddNotesFlag(!addNotesFlag);
+        console.log(res);
+        toast.success("notes added");
+      });
+    setContent("");
   };
 
   return (
-    <Card
-      variant="outlined"
-      {...other}
-    >
+    <Card variant="outlined" {...other}>
       <Box
         sx={{
           p: 2,
-          alignItems: 'center',
-          display: 'flex'
+          alignItems: "center",
+          display: "flex",
         }}
       >
         <InputBase
@@ -36,7 +49,7 @@ export const CustomerNoteAdd = (props) => {
           placeholder="Comment text..."
           sx={{
             flex: 1,
-            mr: 2
+            mr: 2,
           }}
           value={content}
         />
@@ -47,14 +60,14 @@ export const CustomerNoteAdd = (props) => {
       <Divider />
       <Box
         sx={{
-          alignItems: 'center',
-          backgroundColor: 'neutral.100',
-          color: 'text.secondary',
-          display: 'flex',
-          p: 2
+          alignItems: "center",
+          backgroundColor: "neutral.100",
+          color: "text.secondary",
+          display: "flex",
+          p: 2,
         }}
       >
-        <EyeIcon sx={{ color: 'inherit' }} />
+        {/* <EyeIcon sx={{ color: 'inherit' }} />
         <Typography
           color="textPrimary"
           variant="body2"
@@ -68,7 +81,7 @@ export const CustomerNoteAdd = (props) => {
           sx={{ color: 'inherit' }}
         >
           <ChevronDownIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
         <Box sx={{ flexGrow: 1 }} />
         <Button
           color="primary"
@@ -84,10 +97,10 @@ export const CustomerNoteAdd = (props) => {
 };
 
 CustomerNoteAdd.defaultProps = {
-  submitDisabled: false
+  submitDisabled: false,
 };
 
 CustomerNoteAdd.propTypes = {
   onSend: PropTypes.func,
-  submitDisabled: PropTypes.bool
+  submitDisabled: PropTypes.bool,
 };

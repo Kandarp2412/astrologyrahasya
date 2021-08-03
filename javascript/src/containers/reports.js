@@ -102,14 +102,17 @@ export const Reports = () => {
         </Box>
         <Outlet />
         {/* <PlanetDetails /> */}
-        <Grid container spacing={3} style={{ padding: "0px", margin: "0px" }}>
+        {/* <Grid container spacing={3} style={{ padding: "0px", margin: "0px" }}>
           <Grid item md={6} xs={12}>
             <Rahsyatask />
           </Grid>
           <Grid item md={6} xs={12}>
             <Rahsyatask />
           </Grid>
-        </Grid>
+
+
+
+        </Grid> */}
       </Container>
     </Box>
   );

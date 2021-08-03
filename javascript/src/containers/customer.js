@@ -41,20 +41,20 @@ const stats = [
 
 // NOTE: This should be generated based on user data because "/1" represents "/:id" from routing
 //  strategy where ":id" is dynamic depending on current customer id
-const tabs = [
-  {
-    href: "/dashboard/customers/1",
-    label: "Summary",
-  },
-  {
-    href: "/dashboard/customers/1/orders",
-    label: "Orders",
-  },
-  {
-    href: "/dashboard/customers/1/activity",
-    label: "Activity",
-  },
-];
+// const tabs = [
+//   {
+//     href: "/dashboard/customers/1",
+//     label: "Summary",
+//   },
+//   {
+//     href: "/dashboard/customers/1/orders",
+//     label: "Orders",
+//   },
+//   {
+//     href: "/dashboard/customers/1/activity",
+//     label: "Activity",
+//   },
+// ];
 
 export const Customer = () => {
   const mounted = useMounted();
@@ -174,7 +174,7 @@ export const Customer = () => {
               {/* {customerState.data.fullName} */}
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
-            <ActionsMenu actions={actions} />
+            {/* <ActionsMenu actions={actions} /> */}
           </Box>
           <Grid
             container
@@ -184,7 +184,7 @@ export const Customer = () => {
             }}
             wrap="wrap"
           >
-            {stats.map(({ content, icon }) => (
+            {/* {stats.map(({ content, icon }) => (
               <Grid
                 item
                 key={content}
@@ -202,14 +202,14 @@ export const Customer = () => {
                   {content}
                 </Typography>
               </Grid>
-            ))}
+            ))} */}
           </Grid>
           <Tabs
             allowScrollButtonsMobile
-            value={tabs.findIndex((tab) => tab.href === location.pathname)}
+            // value={tabs.findIndex((tab) => tab.href === location.pathname)}
             sx={{ mt: 4 }}
           >
-            {tabs.map((option) => (
+            {/* {tabs.map((option) => (
               <Tab
                 component={RouterLink}
                 key={option.href}
@@ -217,9 +217,9 @@ export const Customer = () => {
                 to={option.href}
                 variant="scrollable"
               />
-            ))}
+            ))} */}
           </Tabs>
-          <Divider />
+          {/* <Divider /> */}
         </Box>
         <Outlet />
         <ConfirmationDialog

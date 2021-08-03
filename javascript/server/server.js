@@ -1,21 +1,3 @@
-// const compression = require('compression');
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const path = require('path');
-// const app = express();
-// app.use(compression());
-// app.disable('x-powered-by');
-// app.use(express.static(path.join(__dirname, 'build')));
-// // need to declare a "catch all" route on your express server
-// // that captures all page requests and directs them to the client
-// // the react-router do the route part
-// app.get('*', function(req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
-// app.listen(process.env.PORT || 5000, function() {
-//   console.log(`Frontend start on http://localhost:5000`);
-// });
-
 const express = require("express");
 const astroreha = require("./routes/astroreha");
 const cors = require("cors");
@@ -27,9 +9,9 @@ const timezone = require("./models/timezone");
 const cheradasa = require("./routes/astro/cheraDasa");
 const yoginiDasa = require("./routes/astro/yoginiDasa");
 const astakavarga = require("./routes/astro/astakavarga");
+const profile = require("./routes/profile/profileApi");
 const mongoose = require("mongoose");
 require("dotenv").config();
-// const astakavarga = require("./routes/astro/astakavarga");
 
 const {
   modela,
@@ -70,7 +52,6 @@ mongoose.connect(
 );
 
 console.log("db");
-app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(cors());
@@ -79,6 +60,7 @@ app.use("/api", astroreha);
 app.use("/api", yoginiDasa);
 app.use("/api", astakavarga);
 app.use("/api", cheradasa);
+app.use("/api", profile);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is up and running" });
@@ -114,27 +96,16 @@ app.post("/userprofile", async function (req, res) {
   console.log("hear=>", req.body);
   const [userprofile, resultmeta] = await db.sequelize.query(
     "INSERT INTO user_profiles (name,date,birthplace,moon_sign,createdAt,updatedAt) VALUES ('" +
-      req.body.formData.name +
+      req.body.name +
       "','" +
-      req.body.formData.birthDate +
-      "','vadodara,gujarat,india','" +
-      req.body.moonSign +
+      req.body.birthDate +
+      "','" +
+      req.body.birthplace +
       "','2021-04-24','2021-04-24')"
   );
   // console.log(userprofile);
   res.send({ data: userprofile });
 
-  // const [search, resultmeta] = await db.sequelize.query(
-  //   "INSERT INTO user_profiles (name, date, time) VALUES (" +
-  //     req.body.formData.name +
-  //     ", " +
-  //     req.body.formData.birthDate +
-  //     ", " +
-  //     req.body.formData.birthTime +
-  //     "); "
-  // );
-  // console.log(search);
-  // res.send({ data: search });
 });
 
 let northernCountry = [
@@ -262,16 +233,49 @@ app.post("/userdata", async function (req, res) {
   res.send({ data: userdata });
 });
 
-app.listen(9002, (err) => {
+app.post("/oneuserdata", async function (req, res) {
+  const [userdata, resultmeta] = await db.sequelize.query(
+    "SELECT * FROM user_profiles where id='" + req.body.id + "'"
+  );
+  // console.log(userdata);
+  res.send({ data: userdata });
+});
+
+app.post("/updateuserdata", async function (req, res) {
+  // console.log(req.body.name);
+  const [userdata, resultmeta] = await db.sequelize.query(
+    "UPDATE user_profile name='" +
+      req.body.name +
+      "' email='" +
+      req.body.email +
+      "' phonenumber='" +
+      req.body.phonenumber +
+      "' where id='" +
+      req.body.id +
+      "'"
+  );
+  // console.log(userdata);
+  // res.send({ data: userdata });
+});
+
+app.post("/deleteuserdata", async function (req, res) {
+  const [userdata, resultmeta] = await db.sequelize.query(
+    "DELETE FROM user_profiles where id='" + req.body.id + "'"
+  );
+  // console.log(userdata);
+  res.send({ data: userdata });
+});
+
+app.listen(9003, (err) => {
   if (err) console.log(err);
-  console.log("running on http://localhost:9002");
-  db.sequelize.authenticate();
-  db.sequelize
-    .sync({ alter: true })
-    .then(() => {
-      console.log("database Connected");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  console.log("running on http://localhost:9003");
+  // db.sequelize.authenticate();
+  // db.sequelize
+  //   .sync({ alter: true })
+  //   .then(() => {
+  //     console.log("database Connected");
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 });

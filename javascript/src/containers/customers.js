@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState ,useContext} from "react";
 import { Helmet } from "react-helmet-async";
 import { Box, Button, Card, Container, Divider, Typography } from "@material-ui/core";
 import { customerApi } from "../api/customer";
@@ -10,9 +10,15 @@ import { useSelection } from "../hooks/use-selection";
 import { Plus as PlusIcon } from "../icons/plus";
 import gtm from "../lib/gtm";
 import axios from "axios";
+import { renderers } from "react-markdown";
+import { globalContext } from "../contexts/Context";
+
+ 
 
 export const Customers = () => {
   const mounted = useMounted();
+  const { refreshUserTable } = useContext(globalContext);
+
   const [controller, setController] = useState({
     filters: [],
     page: 0,
@@ -20,6 +26,7 @@ export const Customers = () => {
     sort: "desc",
     sortBy: "createdAt",
     view: "all",
+    deleted : true
   });
   const [customersState, setCustomersState] = useState({ isLoading: true });
   const [selectedCustomers, handleSelect, handleSelectAll] = useSelection(
@@ -27,8 +34,8 @@ export const Customers = () => {
   );
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
 
-  const [userData, setUserData] = useState([]);
 
+  
   const getCustomers = useCallback(async () => {
     setCustomersState(() => ({ isLoading: true }));
 
@@ -41,6 +48,8 @@ export const Customers = () => {
         sortBy: controller.sortBy,
         view: controller.view,
       });
+
+      // console.log(result)
 
       if (mounted.current) {
         setCustomersState(() => ({
@@ -59,14 +68,18 @@ export const Customers = () => {
       }
     }
   }, [controller]);
+  
 
   useEffect(() => {
     getCustomers().catch(console.error);
-  }, [controller]);
+  }, [controller,refreshUserTable]);
 
+ 
+  
   useEffect(() => {
     gtm.push({ event: "page_view" });
   }, []);
+
 
   const handleViewChange = (newView) => {
     setController({
@@ -124,12 +137,15 @@ export const Customers = () => {
     });
   };
 
+  
+
   // useEffect(() => {
   //   axios.post("http://localhost:9002/userdata").then((res) => console.log(res.data.data.name));
   // }, []);
 
   return (
     <>
+    {/* {console.log("render")} */}
       <Helmet>
         <title>Customers | Carpatin Retail Dashboard</title>
       </Helmet>
@@ -189,6 +205,7 @@ export const Customers = () => {
               view={controller.view}
             />
             <Divider />
+            {/* {console.log(render)} */}
             <CustomersTable
               customers={customersState.data?.customers}
               customersCount={customersState.data?.customersCount}
@@ -202,7 +219,8 @@ export const Customers = () => {
               selectedCustomers={selectedCustomers}
               sort={controller.sort}
               sortBy={controller.sortBy}
-            />
+              >
+            </CustomersTable>
           </Card>
         </Container>
       </Box>

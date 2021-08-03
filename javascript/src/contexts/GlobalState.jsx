@@ -28,7 +28,9 @@ const GlobalState = (props) => {
 
   const birthTimeVal = useRef("13:49:32");
 
-  const [progressionChart, setProgressionChart] = useState(birthDateVal.current.value);
+  const [progressionChart, setProgressionChart] = useState(
+    birthDateVal.current !== null ? birthDateVal.current.value : " "
+  );
   const [transitChart, setTransitChart] = useState({});
   const [toggleTrue, setToggleTrue] = useState(false);
   const [selectedCharts, setSelectedCharts] = useState(["d1Chart"]);
@@ -53,9 +55,13 @@ const GlobalState = (props) => {
 
   const [moonSign, setMoonSign] = useState("");
 
-  const equation = moment(birthDateVal.current.value).format("yyyy");
+  const equation = moment(
+    birthDateVal.current !== null ? birthDateVal.current.value : "2021"
+  ).format("yyyy");
 
-  const addDate = moment(birthDateVal.current.value).format("DD");
+  const addDate = moment(birthDateVal.current !== null ? birthDateVal.current.value : "12").format(
+    "DD"
+  );
 
   const [transitionDate, setTransitionDate] = useState(equation);
   const [write, setWrite] = useState(false);
@@ -64,6 +70,10 @@ const GlobalState = (props) => {
 
   const [color, setColor] = useState("lightgoldenrodyellow");
 
+  const [selectedChartType, setSelectedChartType] = useState("Netal");
+
+  const [addNotesFlag, setAddNotesFlag] = useState(true);
+
   let finalTransitDate;
   // moment(birthDateVal.current.value).format("DD-MM-") + transitionDate;
 
@@ -71,9 +81,13 @@ const GlobalState = (props) => {
   // progrestionDate + moment(formData.birthDate).format("-MM-YYYY");
 
   if (date === 0) {
-    finalProgressionDate = birthDateVal.current.value;
-    finalTransitDate = birthDateVal.current.value;
+    finalProgressionDate = birthDateVal.current !== null ? birthDateVal.current.value : "12";
+    finalTransitDate = birthDateVal.current !== null ? birthDateVal.current.value : "12";
   }
+  const [oneUser, setOneUser] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  const [refreshUserTable, setRefreshUserTable] = useState(false);
   const [data, setData] = useState();
   const [dasha, setDasha] = useState([]);
   const [ayanamshas, setAyanamshas] = useState();
@@ -155,6 +169,16 @@ const GlobalState = (props) => {
         birthTimeVal,
         write,
         setWrite,
+        oneUser,
+        setOneUser,
+        refreshUserTable,
+        setRefreshUserTable,
+        selectedChartType,
+        setSelectedChartType,
+        addNotesFlag,
+        setAddNotesFlag,
+        userData, 
+        setUserData
       }}
     >
       {children}

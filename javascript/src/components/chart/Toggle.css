@@ -145,7 +145,19 @@
 
 .MuiOutlinedInput-root {
   height: 40px;
+  padding: 0px !important;
   /* margin-left: 10px; */
+}
+
+/* .MuiButton-root{
+  width: 210px !important;
+} */
+
+#appt-time:hover {
+  border: 1px solid black !important;
+}
+#appt-time:focus {
+  border: 1px solid blue !important;
 }
 /* .MuiButtonBase-root {
   display: none;
