@@ -19,20 +19,20 @@ router.route("/profile/get/:id").get(async (req, res) => {
 
 /**create a profile */
 router.route("/profile/post").post(async (req, res) => {
-  let { chartType, favorite,profile } =
+  let { name, email, phoneNumber, time, date, birthPlace, chartType, relation, favorite } =
     req.body;
-
-    console.log(req.body)
-
-  profile = profile     || "https://media.allure.com/photos/60c39719ca8d7baf79628d1c/master/w_1600%2Cc_limit/GettyImages-1280278639.jpg"
-  favorite = favorite   || false;
+  favorite = favorite || false;
   chartType = chartType || "Netal";
   const user = await users.create({
-  
-    chartType:chartType,
-    favorite :favorite,
-    chartType:chartType,
-    ...req.body
+    name,
+    email,
+    phoneNumber,
+    time,
+    date,
+    birthPlace,
+    chartType,
+    relation,
+    favorite,
   });
   user.save();
   res.json({ messege: "user saved sucessfully", data: user });
@@ -42,15 +42,11 @@ router.route("/profile/post").post(async (req, res) => {
 router.route("/profile/update/:id").post(async (req, res) => {
   const { id } = req.params;
   // console.log(id)
-  if(id == "undefined") return res.json({ messege: "no users found", data: [] });
-  //    const {name,email,phoneNumber,birthDetails,moonSign,chartType,relation} = req.body
-
-  const user = await users.findByIdAndUpdate({ _id: id }, { ...req.body }, { new: true });
-  user.save();
-
-  res.json({ messege: "user updated sucessfully", data: user });
+  if (id == "undefined") return res.json({ messege: "no users found", data: [] });
+  const user1 = await users.findByIdAndUpdate({ _id: id }, { ...req.body }, { new: true });
+  // user.save();
+  res.json({ messege: "user updated sucessfully", data: user1 });
 });
-
 /**delete profile */
 router.route("/profile/delete/:id").post(async (req, res) => {
   const { id } = req.params;
@@ -69,9 +65,7 @@ router.route("/profile/filter").post(async (req, res) => {
 /*create notes by particular user by passing id */
 router.route("/profile/notes/:id").post(async (req, res) => {
   const { id } = req.params;
-  let date = new Date()
-  createdAt = date.toLocaleString()
-  const note = await notesCollection.create({ id,createdAt,...req.body });
+  const note = await notesCollection.create({ id, ...req.body });
   note.save();
   res.json({ messege: "notes saved", data: note });
 });
@@ -79,7 +73,7 @@ router.route("/profile/notes/:id").post(async (req, res) => {
 /*Get all notes by passing id */
 router.route("/profile/allnotes/:id").post(async (req, res) => {
   const { id } = req.params;
-  const note = await notesCollection.find({ id: id }).sort( { createdAt: -1 } );
+  const note = await notesCollection.find({ id: id, order: [["createdAt", "DESC"]] });
   const note1 = note.map((i) => i);
   res.json({ messege: "All notes", data: note1 });
 });
@@ -87,9 +81,7 @@ router.route("/profile/allnotes/:id").post(async (req, res) => {
 /*Update notes */
 router.route("/profile/notes/edit/:id").post(async (req, res) => {
   const { id } = req.params;
-  const date = new Date();
-  const createdAt = date.toLocaleString()
-  const note = await notesCollection.findByIdAndUpdate({ _id: id }, {createdAt, ...req.body }, { new: true });
+  const note = await notesCollection.findByIdAndUpdate({ _id: id }, { ...req.body }, { new: true });
   res.json({ messege: "notes updated", data: note });
 });
 

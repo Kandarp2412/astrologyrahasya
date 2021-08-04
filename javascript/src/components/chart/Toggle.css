@@ -1,6 +1,4 @@
 .react-toggle {
-  touch-action: pan-x;
-
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -85,12 +83,11 @@
   margin-bottom: 14px;
 }
 
-.react-toggle-track-x {
+/* .react-toggle-track-x {
   position: absolute;
   width: 10px;
   height: 10px;
   top: -1px;
-  /* bottom: 0px; */
   margin-top: 35px;
   margin-bottom: auto;
   line-height: 0;
@@ -99,10 +96,11 @@
   -webkit-transition: opacity 0.25s ease;
   -moz-transition: opacity 0.25s ease;
   transition: opacity 0.25s ease;
-}
+} */
 
-.react-toggle--checked .react-toggle-track-x {
-  opacity: 0;
+.react-toggle-track-check,
+.react-toggle-track-x {
+  display: none;
 }
 
 .react-toggle-thumb {
@@ -149,16 +147,37 @@
   /* margin-left: 10px; */
 }
 
-/* .MuiButton-root{
-  width: 210px !important;
-} */
-
-#appt-time:hover {
-  border: 1px solid black !important;
-}
 #appt-time:focus {
   border: 1px solid blue !important;
 }
 /* .MuiButtonBase-root {
   display: none;
+} */
+
+.MuiOutlinedInput-root {
+  border-radius: 2px !important;
+}
+
+.MuiOutlinedInput-root:hover {
+  border: 1px solid transparent !important;
+}
+
+#top-header {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+
+legend {
+  width: inherit;
+}
+
+/* .css-aaoqxx {
+  overflow: inherit !important;
+}
+
+.css-jg1ckv {
+  overflow: inherit;
+}
+
+.css-1ccdrsa {
+  overflow: inherit;
 } */

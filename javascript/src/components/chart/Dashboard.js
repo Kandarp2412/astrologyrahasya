@@ -39,6 +39,9 @@ import "./Toggle.css";
 import { globalContext } from "../../contexts/Context";
 import { Autocomplete, Divider, Grid, TextField } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
+import Dasha from "../tables/Dasha";
+import Accordion from "../tables/Accordion";
+import Demo from "../tables/Demo";
 // import TextField from "@material-ui/core/TextField";
 // import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -919,6 +922,9 @@ const Dashboard = () => {
         </CardSummary> */}
           </div>
         </Grid>
+        {/* {data && <Dasha />} */}
+        {/* <Accordion /> */}
+        <Demo />
       </DragDropContext>
     </Fragment>
   );

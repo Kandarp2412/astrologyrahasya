@@ -25,6 +25,7 @@ import { globalContext } from "../contexts/Context";
 import BirthDetailsForm from "../components/chart/BirthDetailsForm";
 import PlanetDetails from "../components/tables/PlanetDetails";
 import Rahsyatask from "../components/tables/Rahsyatask";
+import Dasha from "../components/tables/Dasha";
 // import { makeStyles } from '@material-ui/core';
 // import TextField from '@material-ui/core/TextField';
 
@@ -102,17 +103,14 @@ export const Reports = () => {
         </Box>
         <Outlet />
         {/* <PlanetDetails /> */}
-        {/* <Grid container spacing={3} style={{ padding: "0px", margin: "0px" }}>
+        <Grid container spacing={3} style={{ padding: "0px", margin: "0px" }}>
           <Grid item md={6} xs={12}>
             <Rahsyatask />
           </Grid>
           <Grid item md={6} xs={12}>
             <Rahsyatask />
           </Grid>
-
-
-
-        </Grid> */}
+        </Grid>
       </Container>
     </Box>
   );

@@ -1,0 +1,83 @@
+/* table, */
+tr {
+  border: 1px solid #f0efef;
+}
+
+tr:hover {
+  background-color: #e6e7ea;
+}
+
+.significatorTable {
+  table-layout: fixed;
+  min-width: 300px;
+}
+
+.significatorTable > tbody > tr > td {
+  word-wrap: break-word;
+  text-align: center;
+  padding: 5px;
+  min-width: 100px;
+}
+
+.significatorTable > thead > tr > td {
+  word-wrap: break-word;
+  text-align: center;
+  padding: 5px;
+  min-width: 100px;
+}
+
+/* .housesignificatorTable {
+  table-layout: fixed;
+  min-width: 300px;
+}
+
+.housesignificatorTable > tbody > tr > td {
+  word-wrap: break-word;
+  text-align: center;
+  padding: 5px;
+  min-width: 100px;
+}
+
+.housesignificatorTable > thead > tr > td {
+  word-wrap: break-word;
+  text-align: center;
+  padding: 5px;
+  min-width: 100px;
+} */
+
+/* .significatorTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.significatorTable tr:nth-child(odd) {
+  background-color: #fde6e4;
+} */
+
+.lighttr {
+  /* border: 1px solid lightgrey; */
+  color: black;
+}
+
+.lighttr.tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.lighttr.tr:nth-child(odd) {
+  background-color: #fde6e4;
+}
+
+.darktr {
+  text-align: center;
+  background-color: #132238;
+  color: white;
+  border: 1px solid white;
+}
+
+.significatordarktr {
+  text-align: center;
+  table-layout: fixed;
+  word-wrap: break-word;
+  background-color: #0e1c2f;
+  color: white;
+  border: 1px solid white;
+}

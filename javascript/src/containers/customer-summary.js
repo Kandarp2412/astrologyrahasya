@@ -10,73 +10,109 @@ import { CustomerProperties } from "../components/customer/customer-properties";
 import { ResourceError } from "../components/resource-error";
 import { ResourceLoading } from "../components/resource-loading";
 import { useMounted } from "../hooks/use-mounted";
-import gtm from "../lib/gtm";export const CustomerSummary = () => {
+import gtm from "../lib/gtm";
+
+export const CustomerSummary = () => {
   const mounted = useMounted();
   const [customerState, setCustomerState] = useState({ isLoading: true });
   const [ordersState, setOrdersState] = useState({ isLoading: true });
   const [notesState, setNotesState] = useState({ isLoading: true });
-  const [openInfoDialog, setOpenInfoDialog] = useState(false);  const getCustomer = useCallback(async () => {
-    setCustomerState(() => ({ isLoading: true }));    try {
-      const result = await customerApi.getCustomer();      if (mounted.current) {
+  const [openInfoDialog, setOpenInfoDialog] = useState(true);
+
+  const getCustomer = useCallback(async () => {
+    setCustomerState(() => ({ isLoading: true }));
+
+    try {
+      const result = await customerApi.getCustomer();
+
+      if (mounted.current) {
         setCustomerState(() => ({
           isLoading: false,
           data: result,
         }));
       }
     } catch (err) {
-      console.error(err);      if (mounted.current) {
+      console.error(err);
+
+      if (mounted.current) {
         setCustomerState(() => ({
           isLoading: false,
           error: err.message,
         }));
       }
     }
-  }, []);  const getOrders = useCallback(async () => {
-    setOrdersState(() => ({ isLoading: true }));    try {
-      const result = await customerApi.getCustomerOrders();      if (mounted.current) {
+  }, []);
+
+  const getOrders = useCallback(async () => {
+    setOrdersState(() => ({ isLoading: true }));
+
+    try {
+      const result = await customerApi.getCustomerOrders();
+
+      if (mounted.current) {
         setOrdersState(() => ({
           isLoading: false,
           data: result,
         }));
       }
     } catch (err) {
-      console.error(err);      if (mounted.current) {
+      console.error(err);
+
+      if (mounted.current) {
         setOrdersState(() => ({
           isLoading: false,
           error: err.message,
         }));
       }
     }
-  }, []);  const getNotes = useCallback(async () => {
-    setNotesState(() => ({ isLoading: true }));    try {
-      const result = await customerApi.getCustomerNotes();      if (mounted.current) {
+  }, []);
+
+  const getNotes = useCallback(async () => {
+    setNotesState(() => ({ isLoading: true }));
+
+    try {
+      const result = await customerApi.getCustomerNotes();
+
+      if (mounted.current) {
         setNotesState(() => ({
           isLoading: false,
           data: result,
         }));
       }
     } catch (err) {
-      console.error(err);      if (mounted.current) {
+      console.error(err);
+
+      if (mounted.current) {
         setNotesState(() => ({
           isLoading: false,
           error: err.message,
         }));
       }
     }
-  }, []);  useEffect(() => {
+  }, []);
+
+  useEffect(() => {
     getCustomer().catch(console.error);
     getOrders().catch(console.error);
     getNotes().catch(console.error);
-  }, []);  useEffect(() => {
+  }, []);
+
+  useEffect(() => {
     gtm.push({ event: "page_view" });
-  }, []);  const renderContent = () => {
+  }, []);
+
+  const renderContent = () => {
     // Wait for all resources to load
     if (customerState.isLoading || notesState.isLoading || ordersState.isLoading) {
       return <ResourceLoading />;
-    }    // If any resource has an error, display only 1 error message
+    }
+
+    // If any resource has an error, display only 1 error message
     if (customerState.error || notesState.error || ordersState.error) {
       return <ResourceError />;
-    }    return (
+    }
+
+    return (
       <>
         <Grid container spacing={3}>
           <Grid container item lg={4} spacing={3} sx={{ height: "fit-content" }} xs={12}>
@@ -103,7 +139,9 @@ import gtm from "../lib/gtm";export const CustomerSummary = () => {
         />
       </>
     );
-  };  return (
+  };
+
+  return (
     <>
       <Helmet>
         <title>Customer Summary | Carpatin Retail Dashboard</title>

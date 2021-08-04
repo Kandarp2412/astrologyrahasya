@@ -1,3 +1,4 @@
+// import {  useState } from "react";
 import PropTypes from "prop-types";
 import { Box, TextareaAutosize, Typography } from "@material-ui/core";
 import { generateResourceId } from "../../utils/generate-resource-id";
@@ -20,7 +21,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import moment from "moment";
-// import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";import "./modal.css";
+// import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+
+import "./modal.css";
 import { useRef } from "react";
 // import {
 //   FormControl,
@@ -35,7 +38,9 @@ import { useRef } from "react";
 //   ModalOverlay,
 //   useDisclosure,
 // } from "@chakra-ui/react";
+
 const useStyles = makeStyles((theme) =>
+  // console.log(abc),
   ({
     modal: {
       display: "flex",
@@ -51,7 +56,6 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
 
 export const CustomerNotes = (props) => {
   const { className } = props;
@@ -70,16 +74,30 @@ export const CustomerNotes = (props) => {
     sx,
     ...other
   } = props;
-  const [notes, setNotes] = useState(notesProp || []);  // let allNotes = useRef([]);  
+  const [notes, setNotes] = useState(notesProp || []);
+
+  // let allNotes = useRef([]);
+
   const [allNotes, setAllNotes] = useState([]);
   const [deleteNotesFlag, setDeleteNotesFlag] = useState(false);
   const [editNotesFlag, setEditNotesFlag] = useState(false);
   const [open, setOpen] = useState(false);
-  const [userNotesId, setUserNotesId] = useState("");  const [show, setShow] = useState(false);
-  const [modal, setModal] = useState(false);  const [editedNotes, setEditedNotes] = useState("");  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);  
-  let { customerId } = useParams();  
-  const { oneUser, addNotesFlag } = useContext(globalContext);  // console.log(notes);  
+  const [userNotesId, setUserNotesId] = useState("");
+
+  const [show, setShow] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const [editedNotes, setEditedNotes] = useState("");
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+
+  let { customerId } = useParams();
+
+  const { oneUser, addNotesFlag } = useContext(globalContext);
+
+  // console.log(notes);
+
   const handleNoteSend = (content) => {
     setNotes((prevNotes) => [
       {
@@ -91,32 +109,40 @@ export const CustomerNotes = (props) => {
         createdAt: new Date(),
       },
       ...prevNotes,
-    ]);}
+    ]);
+  };
 
   useEffect(() => {
     axios.post(`http://localhost:9003/api/profile/allnotes/${customerId}`).then((res) => {
-      // console.log("hii");
+      console.log("hii");
       // console.log(res.data.data[0].notes);
       setAllNotes(res.data.data);
     });
   }, [deleteNotesFlag, addNotesFlag]);
-  // console.log(allNotes); 
-   const handleNoteDelete = (noteId) => {
+  // console.log(allNotes);
+
+  const handleNoteDelete = (noteId) => {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
-  };  
+  };
+
   const handleNotesDelete = (id) => {
     // console.log(id);
     axios.post(`http://localhost:9003/api/profile/notes/delete/${id}`).then((res) => {
       setDeleteNotesFlag(!deleteNotesFlag);
       console.log(res);
     });
-  };  
+  };
+
   const handleEditNotes = () => {
     setEditNotesFlag(true);
-  };  const handleClickOpen = (notesId) => {
+  };
+
+  const handleClickOpen = (notesId) => {
     setUserNotesId(notesId);
     setOpen(true);
-  };  const handleClose = (notesId, notes) => {
+  };
+
+  const handleClose = (notesId, notes) => {
     console.log(notesId);
     console.log(editedNotes ? editedNotes : notes);
     axios
@@ -124,21 +150,29 @@ export const CustomerNotes = (props) => {
         notes: editedNotes ? editedNotes : notes,
       })
       .then((res) => {
-        setDeleteNotesFlag(!deleteNotesFlag);        console.log(res);
+        setDeleteNotesFlag(!deleteNotesFlag);
+
+        console.log(res);
       });
     setOpen(false);
-  };  const handleOpen = () => {
+  };
+
+  const handleOpen = () => {
     setOpen(true);
-  };  // const handleClose = () => {
+  };
+
+  // const handleClose = () => {
   //   setOpen(false);
-  // };  // const { isOpen, onOpen, onClose } = useDisclosure(); 
+  // };
+
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef();
-  const finalRef = React.useRef();  
-  
+  const finalRef = React.useRef();
+
   useEffect(() => {
     setNotes(notesProp);
-  }, [notesProp]);  
+  }, [notesProp]);
 
   return (
     <Box {...other}>
@@ -236,7 +270,7 @@ export const CustomerNotes = (props) => {
                         </DialogActions>
                       </Dialog>
                       {/* {modal ? console.log(i._id === i._id ? console.log(i._id) : null) : null} */}
-                      {/*
+                      {/* 
                       <Modal
                         initialFocusRef={initialRef}
                         finalFocusRef={finalRef}
@@ -251,18 +285,23 @@ export const CustomerNotes = (props) => {
                             <FormControl>
                               <FormLabel>First name</FormLabel>
                               <Input ref={initialRef} placeholder="First name" />
-                            </FormControl>                            <FormControl mt={4}>
+                            </FormControl>
+
+                            <FormControl mt={4}>
                               <FormLabel>Last name</FormLabel>
                               <Input placeholder="Last name" />
                             </FormControl>
-                          </ModalBody>                          <ModalFooter>
+                          </ModalBody>
+
+                          <ModalFooter>
                             <Button colorScheme="blue" mr={3}>
                               Save
                             </Button>
                             <Button onClick={onClose}>Cancel</Button>
                           </ModalFooter>
                         </ModalContent>
-                      </Modal> */}                      
+                      </Modal> */}
+
                       <Button
                         color="primary"
                         onClick={() => handleNotesDelete(i._id)}

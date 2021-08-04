@@ -85,8 +85,6 @@ const GlobalState = (props) => {
     finalTransitDate = birthDateVal.current !== null ? birthDateVal.current.value : "12";
   }
   const [oneUser, setOneUser] = useState([]);
-  const [userData, setUserData] = useState([]);
-
   const [refreshUserTable, setRefreshUserTable] = useState(false);
   const [data, setData] = useState();
   const [dasha, setDasha] = useState([]);
@@ -177,8 +175,6 @@ const GlobalState = (props) => {
         setSelectedChartType,
         addNotesFlag,
         setAddNotesFlag,
-        userData, 
-        setUserData
       }}
     >
       {children}

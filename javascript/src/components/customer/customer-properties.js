@@ -1,91 +1,105 @@
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import numeral from 'numeral';
-import { Card, CardHeader, Divider } from '@material-ui/core';
-import { PropertyList } from '../property-list';
-import { PropertyListItem } from '../property-list-item';
-import { globalContext } from '../../contexts/Context';
-import { useContext } from 'react';
+import PropTypes from "prop-types";
+import { format } from "date-fns";
+import numeral from "numeral";
+import {
+  Button,
+  Card,
+  CardHeader,
+  Divider,
+  InputLabel,
+  NativeSelect,
+  TextareaAutosize,
+} from "@material-ui/core";
+import { PropertyList } from "../property-list";
+import { PropertyListItem } from "../property-list-item";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { useState } from "react";
 
 export const CustomerProperties = (props) => {
-  const { oneUser, setOneUser } = useContext(globalContext);
   const { customer, ...other } = props;
 
-   console.log(customer)
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (notesId, notes) => {
+    setOpen(false);
+  };
 
   return (
-    <Card
-      variant="outlined"
-      {...other}
-    >
-      <CardHeader title="Customer Properties" />
+    <Card variant="outlined" {...other}>
+      <CardHeader
+        title="Customer Properties"
+        action={
+          <Button color="primary" onClick={(e) => setOpen(true)} variant="text">
+            Edit
+          </Button>
+        }
+      />
+      <Dialog
+        // style={{ width: "100%" }}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Edit</DialogTitle>
+        <InputLabel>Ayanamsha</InputLabel>
+        <NativeSelect
+          style={{ margin: "30px" }}
+          defaultValue="Netal"
+          inputProps={{
+            name: "name",
+            id: "uncontrolled-native",
+          }}
+          // onChange={(e) => handleChangeChartType(e)}
+        >
+          <option value="Netal">Kp</option>
+          <option value="Event">LAHIRI</option>
+          <option value="Horay">DELUCE</option>
+        </NativeSelect>
+        <InputLabel>Ayanamsha</InputLabel>
+        <NativeSelect
+          style={{ margin: "30px" }}
+          defaultValue="Netal"
+          inputProps={{
+            name: "name",
+            id: "uncontrolled-native",
+          }}
+          // onChange={(e) => handleChangeChartType(e)}
+        >
+          <option value="Netal">Kp</option>
+          <option value="Event">LAHIRI</option>
+          <option value="Horay">DELUCE</option>
+        </NativeSelect>
+        {/* </DialogContent> */}
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => handleClose()} color="primary" autoFocus>
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* <Button>a</Button> */}
       <Divider />
       <PropertyList>
+        <PropertyListItem divider label="sun" value={customer.isTaxExempt ? "Yes" : "No"} />
         <PropertyListItem
           divider
-          label="sun"
-          value={oneUser.sun}
+          label="Moon"
+          value={`${numeral(customer.storeCredit).format("$0,0.00")} USD`}
         />
-         <PropertyListItem
-          divider
-          label="moon"
-          value={oneUser.moon}
-        />
-         <PropertyListItem
-          divider
-          label="mars"
-          value={oneUser.mars}
-        />
-         <PropertyListItem
-          divider
-          label="rahu"
-          value={oneUser.rahu}
-        />
-         <PropertyListItem
-          divider
-          label="jupitor"
-          value={oneUser.jupitor}
-        />
-         <PropertyListItem
-          divider
-          label="saturn"
-          value={oneUser.saturn}
-        />
-         <PropertyListItem
-          divider
-          label="mercury"
-          value={oneUser.mercury}
-        />
-         <PropertyListItem
-          divider
-          label="ketu"
-          value={oneUser.ketu}
-        />
- 
-          <PropertyListItem
-          divider
-          label="venus"
-          value={oneUser.venus }
-        />
-        {/* <PropertyListItem
-          divider
-          label="Store Credit"
-          value={`${numeral(customer.storeCredit).format('$0,0.00')} USD`}
-        />
-        <PropertyListItem
-          divider
-          label="Status"
-          value={customer.status}
-        />
-        <PropertyListItem
-          label="Signup"
-          value={format(customer.createdAt, 'dd MM yyyy HH:mm')}
-        /> */}
+        <PropertyListItem divider label="Status" value={customer.status} />
+        <PropertyListItem label="Signup" value={format(customer.createdAt, "dd MM yyyy HH:mm")} />
       </PropertyList>
     </Card>
   );
 };
 
 CustomerProperties.propTypes = {
-  customer: PropTypes.object.isRequired
+  customer: PropTypes.object.isRequired,
 };

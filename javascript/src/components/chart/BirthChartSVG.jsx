@@ -27,7 +27,7 @@ const DetailMapper = (props) => {
             style={{ fill: "black", fontSize: "17px", marginTop: "10px" }}
             key={obj.text}
             id="XMLID_77_"
-            transform={`translate(${x + 30} ${y + index * 14 - 14})`}
+            transform={`translate(${x + 30} ${y + index * 17 - 12})`}
             className="st5 st6 detail"
           >
             {/* {obj.text} */}

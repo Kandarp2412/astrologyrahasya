@@ -15,11 +15,10 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 // import GlobalState from "../../contexts/GlobalState";
 import { globalContext } from "../../contexts/Context";
-import UpdateIcon from '@material-ui/icons/Update';
 
 export const CustomerInfo = (props) => {
   const { customer, onEdit, ...other } = props;
-  // console.log(customer);
+  console.log(onEdit);
   const [deleteDialogOpen, handleOpenDeleteDialog, handleCloseDeleteDialog] = useDialog();
 
   const { oneUser, setOneUser } = useContext(globalContext);
@@ -45,13 +44,6 @@ export const CustomerInfo = (props) => {
     });
   }, []);
 
-  const fileUpload = (e)=>{
-   let a = e.target.files[0]
-    const formData = new FormData();
-    formData.append("profile",e.target.files[0]);
-    console.log(formData.get('profile'))
-  }
-
   return (
     <>
       <Card variant="outlined" {...other}>
@@ -72,37 +64,19 @@ export const CustomerInfo = (props) => {
             py: 1.5,
           }}
         >
-          <Avatar
+          {/* <Avatar
             alt={customer.name}
-            src={oneUser.profile}
+            src={oneUser.avatar}
             sx={{
               height: 64,
               mr: 1,
               width: 64,
             }}
             variant="rounded"
-          />
-           <IconButton>
-            <Button
-              variant="outline"
-              component="label"
-              onChange={(e)=>{fileUpload(e)}}
-            >
-              <UpdateIcon/>
-              <input
-                type="file"
-                hidden
-                accept="image/png, image/jpeg"
-              />
-            </Button>
-           
-          </IconButton>
-          
-           
-         
-          {/* <IconButton color="inherit">
+          /> */}
+          <IconButton color="inherit">
             <ExternalLinkIcon />
-          </IconButton> */}
+          </IconButton>
         </Box>
         {/* {oneUser.map((user) => { */}
         <PropertyList>
@@ -113,28 +87,32 @@ export const CustomerInfo = (props) => {
           <PropertyListItem divider label="Birth Date" value={oneUser.date} />
           <PropertyListItem divider label="Birth Time " value={oneUser.time} />
           <PropertyListItem divider label="Birth Place" value={oneUser.birthPlace} />
+          <PropertyListItem divider label="Latitude" value={oneUser.latitude} />
+          <PropertyListItem divider label="Longitude" value={oneUser.longitude} />
+          <PropertyListItem divider label="Time zone" value={oneUser.timezone} />
+
           {/* <PropertyListItem divider label="Full Address" value={customer.address} /> */}
           {/* <PropertyListItem label="Location" value={customer.country} /> */}
         </PropertyList>
         {/* })} */}
-        {/* <Divider /> */}
-        {/* <ActionList>
+        <Divider />
+        <ActionList>
           <ActionListItem icon={EyeIcon} onClick={handlePreview} label="Preview" />
           <ActionListItem
             icon={TrashIcon}
             label="Delete User Data"
             onClick={handleOpenDeleteDialog}
           />
-        </ActionList> */}
+        </ActionList>
       </Card>
-      {/* <ConfirmationDialog
+      <ConfirmationDialog
         message="Are you sure you want to delete the user data? This can't be undone."
         onCancel={handleCloseDeleteDialog}
         onConfirm={handleDelete}
         open={deleteDialogOpen}
         title="Delete user data"
         variant="error"
-      /> */}
+      />
     </>
   );
 };

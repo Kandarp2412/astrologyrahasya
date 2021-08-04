@@ -5,15 +5,19 @@ import { usePopover } from "../../hooks/use-popover";
 import { DotsVertical as DotsVerticalIcon } from "../../icons/dots-vertical";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { globalContext } from "../../contexts/Context";
+import { CustomerDialog } from "./customer-dialog";
+import { CustomerInfo } from "./customer-info";
 
 export const CustomerMenu = (props) => {
   const navigate = useNavigate();
-  const { customer } = props;
-  // console.log(props);
+  const { customer, onEdit } = props;
+  console.log(onEdit);
 
   const { refreshUserTable, setRefreshUserTable } = useContext(globalContext);
+
+  const [editModal, setEditModal] = useState(false);
 
   // console.log(customer);
 
@@ -21,7 +25,7 @@ export const CustomerMenu = (props) => {
 
   const handleEdit = () => {
     handleClose();
-    navigate(`/dashboard/customers/${customer.id}`);
+    navigate(`/dashboard/customers/${customer._id}`);
   };
 
   const handleReport = () => {
@@ -31,11 +35,10 @@ export const CustomerMenu = (props) => {
 
   const handleDelete = () => {
     handleClose();
-    axios.post(`http://localhost:9003/api/profile/delete/${customer.id}`).then((res) => {
+    axios.post(`http://localhost:9003/api/profile/delete/${customer._id}`).then((res) => {
       toast.success("successfully deleted");
       setRefreshUserTable(!refreshUserTable);
     });
-    
   };
 
   return (
@@ -56,14 +59,17 @@ export const CustomerMenu = (props) => {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        <MenuItem onEdit={(e) => setEditModal(true)}>Edit</MenuItem>
+        <MenuItem onClick={handleEdit}>Edit +</MenuItem>
         <MenuItem onClick={handleReport}>View</MenuItem>
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
+      {editModal ? <CustomerInfo /> : null}
     </>
   );
 };
 
 CustomerMenu.propTypes = {
   customer: PropTypes.object.isRequired,
+  onEdit: PropTypes.func,
 };

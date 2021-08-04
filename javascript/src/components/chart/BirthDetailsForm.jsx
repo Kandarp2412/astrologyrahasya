@@ -1,21 +1,11 @@
-// import { Button } from "@chakra-ui/react";
-// import { Select } from "@chakra-ui/react";
-
-// import { FormControl, FormLabel } from "@chakra-ui/form-control";
-// import { Input } from "@chakra-ui/input";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-// import { globalContext } from "../context/Context";
+
 import axios from "axios";
-// import AppContext, { globalContext } from "../../context/Context";
-// import countryList from "react-select-country-list";
-// import cities from "cities.json";
-// import { Button, InputLabel } from "@material-ui/core";
-// import LanguageSelector from "../dashboard/LanguageSelector";
+
 import Demo from "./Demo";
-// import { countries } from "country-data-list";
+
 import Autocomplete from "@material-ui/lab/Autocomplete";
-// import timezones from "timezones-list";
-// import tz from "tz-db";
+
 import { globalContext } from "../../contexts/Context";
 import { LocalizationProvider, TimePicker } from "@material-ui/lab";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
@@ -37,7 +27,10 @@ import {
   Checkbox,
 } from "@material-ui/core";
 import toast from "react-hot-toast";
+import "./Toggle.css";
 import moment from "moment";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 // import { Demo } from "./Demo";
 // import csc from "countries-states-cities";
@@ -47,7 +40,7 @@ const BirthDetailsForm = () => {
   const [birthPlace, setBirthPlace] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("India");
   const [countryName, setCountryName] = useState([]);
-  const [timezone, setTimeZone] = useState("");
+  // const [timezone, setTimeZone] = useState("");
   const [astakavarguPlanetName, setAstakavarguPlanetName] = useState("Sun");
   const [advancedOption, setAdvancedOption] = useState(false);
 
@@ -55,7 +48,7 @@ const BirthDetailsForm = () => {
   const [result, setResult] = useState([]);
   const [latitude, setLatidude] = useState("");
   const [longitude, setlongitude] = useState("");
-  // const [timezone, setTimeZone] = useState("");
+  const [timezone, setTimeZone] = useState("");
   const [value, setValue] = useState("");
 
   // const [age, setAge] = useState("South Indian");
@@ -116,9 +109,13 @@ const BirthDetailsForm = () => {
   const [userBirthTime, setUserBirthTime] = useState("");
   const [userBirthPlace, setUserBirthPlace] = useState("");
   const [top100Films, setTop100Films] = useState([]);
+  const [setEditName, editName] = useState(false);
+
   // const [flag, setFlag] = useState(false);
 
   const [userExistsData, setUserExistsData] = useState([]);
+  const [deleteuserFlag, setDeleteUserFlag] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -133,95 +130,121 @@ const BirthDetailsForm = () => {
             })
             .then((res) => {
               toast.success("user created successfully");
+              setRefresh(!refresh);
               console.log(res);
             })
         : null;
     }
-    // axios
-    //   .post("https://rahasyavedic.herokuapp.com/api/getBirthChart", {
-    //     dateString: "2021-04-24",
-    //     timeString: "13:49:32",
-    //     lat: "17.3667",
-    //     lng: "78.4667",
-    //     timezone: "5",
-    //     ayanamsha: 1,
-    //   })
-    //   .then((res) => {
-    //     axios
-    //       .post("http://localhost:9002/api/astakavargu", {
-    //         reference_element: astakavarguPlanetName,
-    //         sun_sign: res.data.astavarga.Su,
-    //         moon_sign: res.data.astavarga.Mo,
-    //         mars_sign: res.data.astavarga.Ma,
-    //         mercury_sign: res.data.astavarga.Me,
-    //         venus_sign: res.data.astavarga.Ve,
-    //         jupiter_sign: res.data.astavarga.Ju,
-    //         saturn_sign: res.data.astavarga.Sa,
-    //         lagnam_sign: res.data.astavarga.La,
-    //       })
-    //       .then((res) => {
-    //         setAstavargaPoints(res.data.data);
-    //         setAstavargaPointsCount(res.data.totelPoints);
-    //       })
-    //       .catch((err) => console.log(err));
+    {
+      checkEdit
+        ? axios
+            .post(`http://localhost:9003/api/profile/update/${defaultId}`, {
+              name: userName,
+              date: userBirthDate ? userBirthDate : defaultdate,
+              time: userBirthTime ? userBirthTime : defaulttime,
+              birthPlace: locationVal.current.value ? locationVal.current.value : defaultbirthplace,
+              latitude: latitude ? latitude : defaultlatitude,
+              longitude: longitude ? longitude : defaultlongitude,
+              timezone: timezone ? timezone : defaulttimezone,
+            })
+            .then((res) => {
+              toast.success(res.data.messege);
+              console.log(res);
+            })
+        : null;
+    }
+    {
+      deleteuserFlag
+        ? axios.post(`http://localhost:9003/api/profile/delete/${defaultId}`).then((res) => {
+            toast.success("User deleted successfully ");
+          })
+        : null;
+    }
+    axios
+      .post("http://localhost:9003/api/getBirthChart", {
+        dateString: "2021-04-24",
+        timeString: "13:49:32",
+        lat: "17.3667",
+        lng: "78.4667",
+        timezone: "5",
+        ayanamsha: 1,
+      })
+      .then((res) => {
+        axios
+          .post("http://localhost:9003/api/astakavargu", {
+            reference_element: astakavarguPlanetName,
+            sun_sign: res.data.astavarga.Su,
+            moon_sign: res.data.astavarga.Mo,
+            mars_sign: res.data.astavarga.Ma,
+            mercury_sign: res.data.astavarga.Me,
+            venus_sign: res.data.astavarga.Ve,
+            jupiter_sign: res.data.astavarga.Ju,
+            saturn_sign: res.data.astavarga.Sa,
+            lagnam_sign: res.data.astavarga.La,
+          })
+          .then((res) => {
+            setAstavargaPoints(res.data.data);
+            setAstavargaPointsCount(res.data.totelPoints);
+          })
+          .catch((err) => console.log(err));
 
-    //     axios
-    //       .post("http://localhost:9002/api/yoginidasa", {
-    //         moonDegree: res.data.astavarga.Mo * 30,
-    //         dateOfBirth: formData.birthDate,
-    //       })
-    //       .then((res) => {
-    //         console.log(res.data);
-    //         setYoginiDasa(res.data.dasa);
-    //         setYoginiDasaYear(res.data.years);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //     axios
-    //       .post("http://localhost:9002/api/cheradasa", {
-    //         bukthi: cheraDashaPlanetName,
-    //         Sun: res.data.cheraDasha.Su,
-    //         Moon: res.data.cheraDasha.Mo,
-    //         Mars: res.data.cheraDasha.Ma,
-    //         Mercury: res.data.cheraDasha.Me,
-    //         Venus: res.data.cheraDasha.Ve,
-    //         Jupiter: res.data.cheraDasha.Ju,
-    //         Saturn: res.data.cheraDasha.Sa,
-    //         lagna: res.data.cheraDasha.La,
-    //         Ketu: res.data.cheraDasha.Ke,
-    //         Rahu: res.data.cheraDasha.Ra,
-    //         marsDegree: res.data.cheraDasha.Ma * 30,
-    //         ketuDegree: res.data.cheraDasha.Ke * 30,
-    //         saturnDegree: res.data.cheraDasha.Sa * 30,
-    //         rahuDegree: res.data.cheraDasha.Ra * 30,
-    //       })
-    //       .then((res) => {
-    //         console.log(res);
-    //         setMoonSign(res.data.Moon);
-    //         setCheraDashaSignName(res.data.subArr);
-    //         setCheraDashaResult(res.data.resultArr);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //     console.log(res.data);
-    //     setData(res.data);
-    //     setDasha(res.data.dasha);
-    //     console.log(dasha);
-    //   })
-    //   .catch((err) => console.log(err));
+        axios
+          .post("http://localhost:9003/api/yoginidasa", {
+            moonDegree: res.data.astavarga.Mo * 30,
+            dateOfBirth: formData.birthDate,
+          })
+          .then((res) => {
+            console.log(res.data);
+            setYoginiDasa(res.data.dasa);
+            setYoginiDasaYear(res.data.years);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        axios
+          .post("http://localhost:9003/api/cheradasa", {
+            bukthi: cheraDashaPlanetName,
+            Sun: res.data.cheraDasha.Su,
+            Moon: res.data.cheraDasha.Mo,
+            Mars: res.data.cheraDasha.Ma,
+            Mercury: res.data.cheraDasha.Me,
+            Venus: res.data.cheraDasha.Ve,
+            Jupiter: res.data.cheraDasha.Ju,
+            Saturn: res.data.cheraDasha.Sa,
+            lagna: res.data.cheraDasha.La,
+            Ketu: res.data.cheraDasha.Ke,
+            Rahu: res.data.cheraDasha.Ra,
+            marsDegree: res.data.cheraDasha.Ma * 30,
+            ketuDegree: res.data.cheraDasha.Ke * 30,
+            saturnDegree: res.data.cheraDasha.Sa * 30,
+            rahuDegree: res.data.cheraDasha.Ra * 30,
+          })
+          .then((res) => {
+            console.log(res);
+            setMoonSign(res.data.Moon);
+            setCheraDashaSignName(res.data.subArr);
+            setCheraDashaResult(res.data.resultArr);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        console.log(res.data);
+        setData(res.data);
+        setDasha(res.data.dasha);
+        console.log(dasha);
+      })
+      .catch((err) => console.log(err));
   };
 
   // const [value, setValue] = useState("");
   // const options = useMemo(() => countryList().getData(), []);
-  // console.log(locationVal.current);
+  console.log(locationVal);
 
-  // let time = locationVal.current.value !== null ? locationVal.current.value.split(",")[2] : "India";
+  // let time = locationVal.current.value !== "" ? locationVal.current.value.split(",")[2] : "India";
 
   // useEffect(() => {
   //   axios
-  //     .post("http://localhost:9002/timezone", {
+  //     .post("http://localhost:9003/timezone", {
   //       birthDateVal: birthDateVal.current.value,
   //       locationVal: time,
   //     })
@@ -268,6 +291,10 @@ const BirthDetailsForm = () => {
     setCheckEdit(!checkEdit);
   };
 
+  const handleDelete = () => {
+    setDeleteUserFlag(!deleteuserFlag);
+  };
+
   const handleDate = (date) => {
     console.log(date);
     // setUserBirthDate(date)
@@ -295,7 +322,7 @@ const BirthDetailsForm = () => {
       console.log(res.data.data);
       setTop100Films(res.data.data);
     });
-  }, []);
+  }, [refresh]);
 
   // useEffect(() => {
   //   axios
@@ -330,6 +357,17 @@ const BirthDetailsForm = () => {
     });
   }, []);
 
+  let a4 = userExistsData.find((i) => i.name === userName);
+  let defaultId = a4 !== undefined ? a4._id : "";
+
+  // const handleDeleteUser = () => {
+  //   axios.post(`http://localhost:9003/api/profile/delete/${defaultId}`).then((res) => {
+  //     toast.success("User deleted successfully ");
+  //   });
+  // };
+
+  console.log(userExistsData);
+
   let a1 = userExistsData.find((i) => i.name === userName);
   let defaulttime = a1 !== undefined ? a1.time : "";
   // console.log(defaulttime);
@@ -339,6 +377,17 @@ const BirthDetailsForm = () => {
 
   let a3 = userExistsData.find((i) => i.name === userName);
   let defaultbirthplace = a3 !== undefined ? "hyd,hyd,hyd" : "";
+
+  let a5 = userExistsData.find((i) => i.name === userName);
+  let defaultlatitude = a5 !== undefined ? a5.latitude : "";
+
+  let a7 = userExistsData.find((i) => i.name === userName);
+  let defaultlongitude = a7 !== undefined ? a7.longitude : "";
+
+  let a8 = userExistsData.find((i) => i.name === userName);
+  let defaulttimezone = a8 !== undefined ? a8.timezone : "";
+
+  console.log(defaultlatitude);
 
   // console.log(defaultbirthplace, a3.birthPlace);
 
@@ -490,6 +539,52 @@ const BirthDetailsForm = () => {
             />
           </Grid>
 
+          <Grid sx={{ display: { xs: "flex", md: "none" } }}>
+            {advancedOption === true ? (
+              <div style={{ marginTop: "30px", marginLeft: "10px" }}>
+                <Grid item>
+                  <InputLabel htmlFor="longitude">Latitude</InputLabel>
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: 270, marginTop: "15px" }}
+                    name="latitude"
+                    onChange={(e) => setLatidude(e.target.value)}
+                    //  inputRef={latitudeVal}
+                    defaultValue={defaultlatitude}
+                  />
+                </Grid>
+                <Grid item style={{ marginLeft: "0px" }}>
+                  <InputLabel htmlFor="latitude">Longitude</InputLabel>
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: 270, marginTop: "15px" }}
+                    name="longitude"
+                    onChange={(e) => setlongitude(e.target.value)}
+                    //  inputRef={longitudeVal}
+                    defaultValue={defaultlongitude}
+                  />
+                </Grid>
+                {console.log(timezone)}
+                <Grid item style={{ marginLeft: "0px" }}>
+                  <InputLabel htmlFor="timeZone">Time Zone</InputLabel>
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: 270, marginTop: "15px" }}
+                    name="timeZone"
+                    onChange={(e) => setTimeZone(e.target.value)}
+                    defaultValue={defaulttimezone}
+                  />
+                </Grid>
+              </div>
+            ) : null}
+          </Grid>
+
           <Grid item md={1} xs={12}>
             <InputLabel htmlFor="name">select chart</InputLabel>
             <Select
@@ -562,23 +657,42 @@ const BirthDetailsForm = () => {
             <InputLabel htmlFor="name" style={{ color: "black" }}>
               Search saved profile
             </InputLabel>
-            <Autocomplete
-              id="free-solo-demo"
-              freeSolo
-              options={top100Films.map((option) => option)}
-              onChange={(e) => setUserName(e.target.lastChild.data)}
-              renderInput={(params) => (
-                <TextField
-                  style={{ padding: "0px" }}
-                  onChange={(e) => setUserName(e.target.value)}
-                  {...params}
-                  margin="normal"
-                  variant="outlined"
-                />
-              )}
-            />
+            {editName ? (
+              <Autocomplete
+                id="free-solo-demo"
+                freeSolo
+                options={top100Films.map((option) => option)}
+                onChange={(e) => setUserName(e.target.lastChild?.data)}
+                renderInput={(params) => (
+                  <TextField
+                    style={{ padding: "0px" }}
+                    onChange={(e) => setUserName(e.target.value)}
+                    {...params}
+                    margin="normal"
+                    variant="outlined"
+                  />
+                )}
+              />
+            ) : (
+              <Autocomplete
+                id="free-solo-demo"
+                freeSolo
+                options={top100Films.map((option) => option)}
+                value={a}
+                onChange={(e) => setUserName(e.target.lastChild?.data)}
+                renderInput={(params) => (
+                  <TextField
+                    style={{ padding: "0px" }}
+                    onChange={(e) => setUserName(e.target.value)}
+                    {...params}
+                    margin="normal"
+                    variant="outlined"
+                  />
+                )}
+              />
+            )}
           </Grid>
-
+          {console.log(defaultId)}
           <Grid item style={{ marginLeft: "35px" }}>
             <InputLabel htmlFor="name" style={{ color: "black" }}>
               Date of birth
@@ -594,7 +708,7 @@ const BirthDetailsForm = () => {
                 height: "40px",
                 marginTop: "15px",
                 width: "170px",
-                borderRadius: "6px",
+                borderRadius: "2px",
                 outline: "midnightblue",
                 border: "1px solid #C5C5C5",
                 padding: "8px",
@@ -614,7 +728,6 @@ const BirthDetailsForm = () => {
             /> */}
             {/* <input type="date" style={{ width: 177,height, marginTop: "15px" }}></input> */}
           </Grid>
-
           <Grid item style={{ marginLeft: "35px" }}>
             <InputLabel htmlFor="name" style={{ color: "black" }}>
               Birth time
@@ -629,7 +742,7 @@ const BirthDetailsForm = () => {
                 height: "40px",
                 marginTop: "15px",
                 width: "170px",
-                borderRadius: "6px",
+                borderRadius: "2px",
                 outline: "midnightblue",
                 border: "1px solid #C5C5C5",
                 padding: "8px",
@@ -666,7 +779,6 @@ const BirthDetailsForm = () => {
               />
             </LocalizationProvider> */}
           </Grid>
-
           <Grid item style={{ marginLeft: "35px" }}>
             <InputLabel htmlFor="locationAddress" style={{ color: "black" }}>
               Birth Place{" "}
@@ -725,8 +837,7 @@ const BirthDetailsForm = () => {
               )}
             /> */}
           </Grid>
-
-          <Grid item style={{ marginLeft: "35px", marginRight: "0px" }}>
+          <Grid item style={{ marginLeft: "35px", marginRight: "15px" }}>
             <InputLabel htmlFor="name" style={{ color: "black" }}>
               select chart
             </InputLabel>
@@ -745,7 +856,6 @@ const BirthDetailsForm = () => {
               <MenuItem value="South Indian">South Indian</MenuItem>
             </Select>
           </Grid>
-
           {/* <Grid item style={{ marginLeft: "10px" }}>
             <InputLabel htmlFor="name">Ayanamsha</InputLabel>
             <Select
@@ -762,83 +872,143 @@ const BirthDetailsForm = () => {
                 })}
             </Select>
           </Grid> */}
-
           {a.find((option) => option === userName) ? (
             <>
               {checkSubmit ? (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      disabled
-                      // checked={state.checkedB}
-                      onChange={handleEdit}
-                      name="checkedB"
-                      color="primary"
-                    />
-                  }
-                  label="Edit"
-                  style={{ marginTop: "-60px", marginLeft: "30px"}}
-                />
+                <>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        // checked={state.checkedB}
+                        onChange={handleEdit}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Edit"
+                    style={{ marginTop: "-60px", marginLeft: "30px", marginRight: "9px" }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        // checked={state.checkedB}
+                        onChange={handleDelete}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Delete"
+                    style={{ marginTop: "-60px", marginLeft: "30px", marginRight: "9px" }}
+                  />
+                </>
               ) : (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      // checked={state.checkedB}
-                      onChange={handleEdit}
-                      name="checkedB"
-                      color="primary"
-                    />
-                  }
-                  label="Edit"
-                  style={{ marginTop: "-60px", marginLeft: "30px" }}
-                />
+                <>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={state.checkedB}
+                        onChange={handleEdit}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Edit"
+                    style={{ marginTop: "-60px", marginLeft: "30px", marginRight: "9px" }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // disabled
+                        // checked={state.checkedB}
+                        onChange={handleDelete}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Delete"
+                    style={{ marginTop: "-60px", marginRight: "9px" }}
+                  />
+                </>
               )}
             </>
           ) : (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  disabled
-                  // checked={state.checkedB}
-                  onChange={handleEdit}
-                  name="checkedB"
-                  color="primary"
-                />
-              }
-              label="Edit"
-              style={{ marginTop: "-60px", marginLeft: "30px" }}
-            />
+            <>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    disabled
+                    // checked={state.checkedB}
+                    onChange={handleEdit}
+                    name="checkedB"
+                    color="primary"
+                  />
+                }
+                label="Edit"
+                style={{ marginTop: "-60px", marginLeft: "30px", marginRight: "9px" }}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    disabled
+                    // checked={state.checkedB}
+                    onChange={handleDelete}
+                    name="checkedB"
+                    color="primary"
+                  />
+                }
+                label="Delete"
+                style={{ marginTop: "-60px", marginRight: "9px" }}
+              />
+            </>
           )}
-
           {flag ? (
             <>
               {checkEdit ? (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      disabled
-                      // checked={state.checkedB}
-                      // onChange={handleChange}
-                      name="checkedB"
-                      color="primary"
-                    />
-                  }
-                  label="Save"
-                  style={{ marginTop: "-60px", marginRight: "-15px" }}
-                />
+                <>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        // checked={state.checkedB}
+                        // onChange={handleChange}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Save"
+                    style={{ marginTop: "-60px", marginRight: "-15px" }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        // checked={state.checkedB}
+                        onChange={handleDelete}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Delete"
+                    style={{ marginTop: "-60px", marginRight: "9px" }}
+                  />
+                </>
               ) : (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      // checked={state.checkedB}
-                      onChange={handleCheckBoxSubmit}
-                      name="checkedB"
-                      color="primary"
-                    />
-                  }
-                  label="Save"
-                  style={{ marginTop: "-60px", marginRight: "-15px" }}
-                />
+                <>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={state.checkedB}
+                        onChange={handleCheckBoxSubmit}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Save"
+                    style={{ marginTop: "-60px", marginRight: "-15px" }}
+                  />
+                </>
               )}
             </>
           ) : (
@@ -856,58 +1026,64 @@ const BirthDetailsForm = () => {
               style={{ marginTop: "-60px", marginRight: "-15px" }}
             />
           )}
-
           <Grid item>
             <InputLabel></InputLabel>
             <Button
               onClick={(event) => handleSubmit(event)}
               variant="contained"
               color="primary"
-              style={{ height: "40px", marginLeft: "-113px", width: "210px", marginTop: "38px" }}
+              style={{ height: "40px", marginLeft: "-130px", width: "160px", marginTop: "38px" }}
             >
               Submit
             </Button>
           </Grid>
         </Grid>
-        {advancedOption === true ? (
-          <div style={{ display: "flex", marginTop: "30px", marginLeft: "-75px" }}>
-            <Grid item>
-              <InputLabel htmlFor="longitude">Latitude</InputLabel>
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                size="small"
-                style={{ width: 325, marginTop: "15px" }}
-                name="latitude"
-                //  inputRef={latitudeVal}
-                value={latitude}
-              />
-            </Grid>
-            <Grid item style={{ marginLeft: "35px" }}>
-              <InputLabel htmlFor="latitude">Longitude</InputLabel>
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                size="small"
-                style={{ width: 325, marginTop: "15px" }}
-                name="longitude"
-                //  inputRef={longitudeVal}
-                value={longitude}
-              />
-            </Grid>
-            <Grid item style={{ marginLeft: "35px" }}>
-              <InputLabel htmlFor="timeZone">Time Zone</InputLabel>
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                size="small"
-                style={{ width: 325, marginTop: "15px" }}
-                name="timeZone"
-                value={timezone}
-              />
-            </Grid>
-          </div>
-        ) : null}
+        <Grid sx={{ display: { xs: "none", md: "flex" } }}>
+          {advancedOption === true ? (
+            <div style={{ display: "flex", marginTop: "30px", marginLeft: "-75px" }}>
+              <Grid item>
+                <InputLabel htmlFor="longitude">Latitude</InputLabel>
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  size="small"
+                  style={{ width: 325, marginTop: "15px" }}
+                  name="latitude"
+                  onChange={(e) => setLatidude(e.target.value)}
+                  inputRef={latitudeVal}
+                  defaultValue={defaultlatitude}
+                />
+              </Grid>
+              {console.log(longitudeVal.current.value)}
+              <Grid item style={{ marginLeft: "35px" }}>
+                <InputLabel htmlFor="latitude">Longitude</InputLabel>
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  size="small"
+                  style={{ width: 325, marginTop: "15px" }}
+                  name="longitude"
+                  onChange={(e) => setlongitude(e.target.value)}
+                  inputRef={longitudeVal}
+                  defaultValue={defaultlongitude ? defaultlongitude : longitudeVal.current.value}
+                />
+              </Grid>
+              {console.log(timezone)}
+              <Grid item style={{ marginLeft: "35px" }}>
+                <InputLabel htmlFor="timeZone">Time Zone</InputLabel>
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  size="small"
+                  style={{ width: 325, marginTop: "15px" }}
+                  name="timeZone"
+                  onChange={(e) => setTimeZone(e.target.value)}
+                  defaultValue={defaulttimezone}
+                />
+              </Grid>
+            </div>
+          ) : null}
+        </Grid>
       </div>
     </div>
   );

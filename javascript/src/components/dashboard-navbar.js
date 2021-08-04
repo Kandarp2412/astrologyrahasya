@@ -140,7 +140,11 @@ export const DashboardNavbar = () => {
 
   return (
     <div>
-      <AppBar elevation={0} sx={{ backgroundColor: darkMode ? "#111318" : "white" }}>
+      <AppBar
+        id="top-header"
+        elevation={0}
+        sx={{ backgroundColor: darkMode ? "#111318" : "white" }}
+      >
         <Toolbar
           disableGutters
           sx={{
@@ -346,7 +350,6 @@ export const DashboardNavbar = () => {
               style={{
                 color: darkMode ? "blue" : "gray",
                 cursor: "pointer",
-                marginLeft:"10px",
                 marginRight: "-10px",
                 padding: "0px",
               }}
@@ -421,7 +424,6 @@ export const DashboardNavbar = () => {
               },
               color: darkMode ? "white" : "gray",
               width: "30px",
-              marginLeft:"10px",
               marginRight: "10px",
             }}
           >
@@ -465,7 +467,6 @@ export const DashboardNavbar = () => {
 
           {/* <NotificationsPopover sx={{ mx: 3 }} style={{color:"black"}}/> */}
           <AccountPopover
-          style={{marginRight:"-87px"}}
             currentOrganization={currentOrganization}
             // darkMode={darkMode}
             // onOrganizationChange={handleOrganizationChange}

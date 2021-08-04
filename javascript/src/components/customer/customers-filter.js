@@ -36,14 +36,9 @@ const views = [
   },
   {
     label: "Horary",
-    value: "Horary",
+    value: "orderedRecently",
   },
-  {
-    label:"Favorites",
-    value:true,
-  }
 ];
-
 const filterProperties = [
   {
     label: "Name",
@@ -61,12 +56,11 @@ const filterProperties = [
     type: "string",
   },
   {
-    label: "Date Of Birth",
+    label: "Created",
     name: "createdAt",
-    type: "string",
+    type: "date",
   },
 ];
-
 const filterOperators = [
   equalOperator,
   notEqualOperator,
@@ -81,7 +75,6 @@ const filterOperators = [
   isBlankOperator,
   isPresentOperator,
 ];
-
 export const CustomersFilter = (props) => {
   const {
     disabled,
@@ -96,8 +89,7 @@ export const CustomersFilter = (props) => {
   } = props;
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
 
-  const {setSelectedChartType ,userData} = useContext(globalContext);
-  // console.log(userData)
+  const { selectedChartType, setSelectedChartType } = useContext(globalContext);
   return (
     <>
       <div>
@@ -187,13 +179,11 @@ export const CustomersFilter = (props) => {
     </>
   );
 };
-
 CustomersFilter.defaultProps = {
   filters: [],
   selectedCustomers: [],
   view: "all",
 };
-
 CustomersFilter.propTypes = {
   disabled: PropTypes.bool,
   filters: PropTypes.array,
